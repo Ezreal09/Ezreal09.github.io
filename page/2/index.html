@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Archive - 文杰 BLOG: 2020/9</title>
+  <title>文杰 BLOG</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
@@ -62,7 +62,7 @@
     var CONFIG = window.CONFIG || {};
     var ZHAOO = window.ZHAOO || {};
     CONFIG = {
-      isHome: false,
+      isHome: true,
       fancybox: true,
       pjax: false,
       lazyload: {
@@ -103,14 +103,6 @@
   
 
 
-<nav class="navbar">
-  <div class="left"></div>
-  <div class="center">归档</div>
-  <div class="right">
-    <i class="iconfont iconmenu j-navbar-menu"></i>
-  </div>
-</nav>
-
   <nav class="menu">
   <div class="menu-wrap">
     <div class="menu-close">
@@ -148,77 +140,71 @@
   </div>
 </nav>
   <main id="main">
-  <section class="archive">
-    <div class="archive-container">
-      <div class="archive-post">
-        <h3 class="archive-total">归档: 10 篇</h3>
+  
+    <div class="preview">
+  <nav class="navbar j-navbar-menu">
+    <i class="iconfont iconmenu"></i>
+  </nav>
+  <div class="preview-image">
+    <h2 class="preview-motto" id="motto"></h2>
+    <!-- <span class="preview-cursor">|</span> -->
+    
+    <div class="preview-overlay">
+      <svg class="preview-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="preview-parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+        </g>
+      </svg>
+    </div>
+    
+  </div>
+  <div class="preview-scroll">
+    <a href="#container" class="smooth-scroll"><i class="iconfont iconMouse"></i></a>
+  </div>
+</div>
+  
+  <div class="container" id="container">
+    <section class="row post">
+  
+  <div class="col-lg-4 col-md-6 col-sm-12 post-item">
+  <div class="post-wrap">
+    
+    <a href="/2020/06/06/js/es5%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF/" class="post-image">
+      <img   class="lazyload" data-original="/images/logo/js.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+    </a>
+    <div class="post-content">
+      <h3 class="post-title"><a href="/2020/06/06/js/es5%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF/">ES5中的继承</a></h3>
+      
+      
+      
+      <div class="post-excerpt">
+        <p class="substr-3">1.原型链通过原型链实现继承的本质是重写子类的原型对象，代之以父类的实例。代码如下：
+123456789101112131415161718//1 原型链function Father() &#...</p>
+      </div>
+      <div class="post-info">
+        <span class="post-info-item"><i class="iconfont iconcalendar"></i>六月 06, 2020</span
+          class="post-info-item">
         
-        
-        
-        <h3 class="archive-year">2020 年</h3>
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/10/25/js/js%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98/">十月 25</a>
-          <a class="archive-title" href="/2020/10/25/js/js%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98/">JS常见手写面试题</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/10/18/js/JS%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/">十月 18</a>
-          <a class="archive-title" href="/2020/10/18/js/JS%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/">JS实现简单的发布订阅模式</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/10/15/vue/Vue2%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/">十月 15</a>
-          <a class="archive-title" href="/2020/10/15/vue/Vue2%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/">Vue2源码学习（一）</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/10/11/HTTP%E5%8D%8F%E8%AE%AE/">十月 11</a>
-          <a class="archive-title" href="/2020/10/11/HTTP%E5%8D%8F%E8%AE%AE/">HTTP协议</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/09/28/js/JS%E9%93%BE%E8%A1%A8/">九月 28</a>
-          <a class="archive-title" href="/2020/09/28/js/JS%E9%93%BE%E8%A1%A8/">JS链表</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/09/07/js/JS%E5%AE%8C%E6%95%B4%E7%9A%84%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0/">九月 07</a>
-          <a class="archive-title" href="/2020/09/07/js/JS%E5%AE%8C%E6%95%B4%E7%9A%84%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0/">JS完整的节流函数</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/08/29/js/JS%E5%85%83%E7%BC%96%E7%A8%8B/">八月 29</a>
-          <a class="archive-title" href="/2020/08/29/js/JS%E5%85%83%E7%BC%96%E7%A8%8B/">JS元编程</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/08/23/js/JS%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">八月 23</a>
-          <a class="archive-title" href="/2020/08/23/js/JS%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">JS隐式转换</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/08/20/js/JS%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/">八月 20</a>
-          <a class="archive-title" href="/2020/08/20/js/JS%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/">JS函数式编程笔记</a>
-        </div>
-        
-        
-        <div class="archive-item">
-          <a class="archive-date" href="/2020/06/06/js/es5%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF/">六月 06</a>
-          <a class="archive-title" href="/2020/06/06/js/es5%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF/">ES5中的继承</a>
-        </div>
-        
+        <span class="post-info-item"><i class="iconfont iconfont-size"></i>4812</span>
       </div>
     </div>
-  </section>
+  </div>
+</div>
+  
+</section>
+    <section class="paginator">
+  
+  <a class="extend prev" rel="prev" href="/">&lt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  
+</section>
+  </div>
 </main>
   <footer class="footer">
   <div class="footer-social">

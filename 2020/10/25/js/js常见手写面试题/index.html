@@ -7,14 +7,16 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>JS完整的节流函数 - 文杰 BLOG</title>
+  <title>JS常见手写面试题 - 文杰 BLOG</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
 
   
   
-  <meta name="description" content="123456789101112131415161718..."> 
+  <meta name="description" content="实现一个new操作符new操作符做了什么：
+
+创建一个..."> 
   
   <meta name="author" content="余文杰"> 
 
@@ -106,7 +108,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">JS完整的节流函数</div>
+  <div class="center">JS常见手写面试题</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -155,25 +157,32 @@
     <section class="head">
   <img   class="lazyload" data-original="/images/logo/js.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">JS完整的节流函数</h1>
+    <h1 class="head-title">JS常见手写面试题</h1>
     <div class="head-info">
-      <span class="post-info-item"><i class="iconfont iconcalendar"></i>九月 07, 2020</span
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 25, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>820</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>404</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//节流函数</span><br><span class="hljs-comment">//每隔一段时间触发</span><br><span class="hljs-comment">//第一次触发立即执行</span><br><span class="hljs-comment">//如果在间隔时间内触发，会在间隔末尾再执行一次</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">throttle</span>(<span class="hljs-params">callback, timmer</span>) </span>&#123;<br>  <span class="hljs-keyword">let</span> isFirst = <span class="hljs-literal">true</span>;<br>  <span class="hljs-keyword">let</span> execDate = +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();<br>  <span class="hljs-keyword">let</span> throttleId;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-keyword">if</span> (isFirst) &#123;<br>      callback();<br>      execDate = +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();<br>      isFirst = <span class="hljs-literal">false</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">const</span> currentDate = +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();<br>      <span class="hljs-keyword">if</span> (currentDate - execDate &gt;= timmer) &#123;<br>        callback();<br>        execDate = + <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">if</span> (throttleId) &#123;<br>          <span class="hljs-built_in">clearTimeout</span>(throttleId)<br>        &#125;;<br>        <span class="hljs-keyword">const</span> timeWait = execDate + timmer - (+<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>());<br>        throttleId = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>          callback();<br>          execDate = + <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();<br>        &#125;, timeWait)<br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+        <h3 id="实现一个new操作符"><a href="#实现一个new操作符" class="headerlink" title="实现一个new操作符"></a>实现一个new操作符</h3><p>new操作符做了什么：</p>
+<ul>
+<li>创建一个新的对象</li>
+<li>继承父类原型上的方法.</li>
+<li>添加父类的属性到新的对象上并初始化. 保存方法的执行结果.</li>
+<li>如果执行结果有返回值并且是一个对象, 返回执行的结果, 否则, 返回新创建的对象。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_new</span>(<span class="hljs-params">fn,...args</span>)</span>&#123;<br>    <span class="hljs-comment">//基于构造函数原型创建一个新对象</span><br>    <span class="hljs-keyword">let</span> obj = <span class="hljs-built_in">Object</span>.create(fn.prototype);<br><br>    <span class="hljs-comment">// 添加属性到新创建的newObj上, 并获取obj函数执行的结果.</span><br>    <span class="hljs-keyword">let</span> res = fn.apply(obj,args);<br><br>    <span class="hljs-comment">// 如果执行结果有返回值并且是一个对象, 返回执行的结果, 否则, 返回新创建的对象</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> res === <span class="hljs-string">&#x27;object&#x27;</span> ? res : obj;<br>&#125;<br></code></pre></td></tr></table></figure>
       </section>
       <section class="extra">
         
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>余文杰</li>
-  <li><strong>本文链接：</strong><a href="https://ezreal09.github.io/2020/09/07/JS%E5%AE%8C%E6%95%B4%E7%9A%84%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0/index.html">https://ezreal09.github.io/2020/09/07/JS%E5%AE%8C%E6%95%B4%E7%9A%84%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://ezreal09.github.io/2020/10/25/js/js%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">https://ezreal09.github.io/2020/10/25/js/js%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -191,15 +200,13 @@
 </section>
         
         
-  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" rel="tag">手写系列</a></li></ul>
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" rel="tag">手写系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
 
         
 <nav class="nav">
   
-    <a href="/2020/09/28/JS%E9%93%BE%E8%A1%A8/"><i class="iconfont iconleft"></i>JS链表</a>
   
-  
-    <a href="/2020/08/29/JS%E5%85%83%E7%BC%96%E7%A8%8B/">JS元编程<i class="iconfont iconright"></i></a>
+    <a href="/2020/10/18/js/JS%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/">JS实现简单的发布订阅模式<i class="iconfont iconright"></i></a>
   
 </nav>
 
