@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ES5中的继承 - 文杰 BLOG</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="1.原型链通过原型链实现继承的本质是重写子类的原型对象..."> 
+  
+  <meta name="author" content="余文杰"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png',
+        wechat: 'https://i.bmp.ovh/imgs/2020/10/c946a2c24fbc9cc9.png'
+      },
+      motto: {
+        api: '',
+        default: '真正的大师，永远都怀着一颗学徒的心。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">ES5中的继承</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09?tab=repositories">地址</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/logo/js.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">ES5中的继承</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>六月 06, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4812</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h3 id="1-原型链"><a href="#1-原型链" class="headerlink" title="1.原型链"></a>1.原型链</h3><p>通过原型链实现继承的本质是重写子类的原型对象，代之以父类的实例。<br>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//1 原型链</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Father</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>.name = <span class="hljs-string">&#x27;father&#x27;</span><br>&#125;<br>Father.prototype.skills = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;QWER&quot;</span>)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Son</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>.weapons = <span class="hljs-string">&quot;sword&quot;</span><br>&#125;<br>Son.prototype = <span class="hljs-keyword">new</span> Father()<br>Son.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;i am running&#x27;</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> mike = <span class="hljs-keyword">new</span> Son()<br><span class="hljs-built_in">console</span>.log(mike.name) <span class="hljs-comment">//father</span><br>mike.skills() <span class="hljs-comment">//QWER</span><br></code></pre></td></tr></table></figure>
+<p>在上面的代码中，我们可以看到用父类Father的实例替换了子类Son的原型对象，这个新原型对象包含了父类的所有属性和方法，然后我们又在这个新的原型上定义了Son自己的方法。<strong>但是这个方法问题也是非常明显，我们知道原型上的方法或者属性都是所有实例共享，假设父类中包含引用类型的属性，当我们通过这种方法来继承时，修改其中一个实例的引用类型属性，则会影响到其他实例。</strong><br>我们仅在上述代码中父类加一个hobby数组来看下，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Father</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>.name = <span class="hljs-string">&#x27;father&#x27;</span><br>    <span class="hljs-built_in">this</span>.hobby = [<span class="hljs-string">&#x27;sing&#x27;</span>,<span class="hljs-string">&#x27;jump&#x27;</span>,<span class="hljs-string">&#x27;rap&#x27;</span>]<br>&#125;<br>Father.prototype.skills = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;QWER&quot;</span>)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Son</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>.weapons = <span class="hljs-string">&quot;sword&quot;</span><br>&#125;<br>Son.prototype = <span class="hljs-keyword">new</span> Father()<br>Son.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;i am running&#x27;</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> mike1 = <span class="hljs-keyword">new</span> Son()<br><span class="hljs-keyword">var</span> mike2 = <span class="hljs-keyword">new</span> Son()<br><span class="hljs-built_in">console</span>.log(mike1.hobby) <span class="hljs-comment">//[&quot;sing&quot;, &quot;jump&quot;, &quot;rap&quot;]</span><br><span class="hljs-built_in">console</span>.log(mike2.hobby)<span class="hljs-comment">//[&quot;sing&quot;, &quot;jump&quot;, &quot;rap&quot;]</span><br><span class="hljs-built_in">console</span>.log(mike1.hobby === mike2.hobby) <span class="hljs-comment">//true</span><br>mike1.hobby.push(<span class="hljs-string">&#x27;basketball&#x27;</span>)<br><span class="hljs-built_in">console</span>.log(mike1.hobby) <span class="hljs-comment">//[&quot;sing&quot;, &quot;jump&quot;, &quot;rap&quot;,&quot;basketball&quot;]</span><br><span class="hljs-built_in">console</span>.log(mike2.hobby)<span class="hljs-comment">//[&quot;sing&quot;, &quot;jump&quot;, &quot;rap&quot;,&quot;basketball&quot;]</span><br><br></code></pre></td></tr></table></figure>
+<p>上面代码中我们可以看到仅仅修改了mike1中的hobby，但mike2也受到了影响。<br>而原型链的另一个问题是创建实例时我们没办法向父类构造函数传递参数。</p>
+<h3 id="2-借用构造函数"><a href="#2-借用构造函数" class="headerlink" title="2.借用构造函数"></a>2.借用构造函数</h3><p>借用构造函数的思想是我们在子类构造函数中调用父类构造函数，然后通过call或者apply来修改this指向。<br>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Father</span>(<span class="hljs-params">name</span>) </span>&#123;<br>     <span class="hljs-built_in">this</span>.name = name<br>     <span class="hljs-built_in">this</span>.hobby = [<span class="hljs-string">&#x27;sing&#x27;</span>, <span class="hljs-string">&#x27;jump&#x27;</span>, <span class="hljs-string">&#x27;rap&#x27;</span>]<br> &#125;<br> Father.prototype.skills = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;QWER&quot;</span>)<br> &#125;<br> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Son</span>(<span class="hljs-params">name</span>) </span>&#123;<br>     Father.call(<span class="hljs-built_in">this</span>, name)  <span class="hljs-comment">//这里修改了this指向并传递了参数</span><br>     <span class="hljs-built_in">this</span>.height = <span class="hljs-string">&quot;150&quot;</span><br> &#125;<br> Son.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;i am running&#x27;</span>)<br> &#125;<br> <span class="hljs-keyword">var</span> mike1 = <span class="hljs-keyword">new</span> Son(<span class="hljs-string">&#x27;xiaoming&#x27;</span>)<br> <span class="hljs-keyword">var</span> mike2 = <span class="hljs-keyword">new</span> Son(<span class="hljs-string">&#x27;xiaohong&#x27;</span>)<br> mike1.hobby.push(<span class="hljs-string">&quot;basketball&quot;</span>)<br> <span class="hljs-built_in">console</span>.log(mike1.hobby) <span class="hljs-comment">//[&quot;sing&quot;, &quot;jump&quot;, &quot;rap&quot;, &quot;basketball&quot;] </span><br> <span class="hljs-built_in">console</span>.log(mike2.hobby) <span class="hljs-comment">//[&quot;sing&quot;, &quot;jump&quot;, &quot;rap&quot;] </span><br><span class="hljs-comment">// mike1.skills() 报错</span><br></code></pre></td></tr></table></figure>
+<p>上面的代码中我们在子类构造函数里调用call修改this指向，解决了原型链中引用类型共用的问题。<strong>但在借用构造函数中，我们定义在父类原型中的方法对子类是不可见的，所以上面mike1.skills会报错，若想定义公用方法，只能在父类构造函数中定义而不是原型，但是这样一来，也就违背了函数复用的理念。</strong></p>
+<h3 id="3-组合继承"><a href="#3-组合继承" class="headerlink" title="3.组合继承"></a>3.组合继承</h3><p>组合继承结合了原型链和借用构造函数的优点，其思想是通过原型链来继承原型上的属性和方法，通过借用构造函数继承实例上的属性。<br>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Father</span>(<span class="hljs-params">name</span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>.name = name<br>    <span class="hljs-built_in">this</span>.hobby = [<span class="hljs-string">&#x27;sing&#x27;</span>, <span class="hljs-string">&#x27;jump&#x27;</span>, <span class="hljs-string">&#x27;rap&#x27;</span>]<br>&#125;<br>Father.prototype.skills = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;QWER&quot;</span>)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Son</span>(<span class="hljs-params">name</span>) </span>&#123;<br>    Father.call(<span class="hljs-built_in">this</span>, name)  <span class="hljs-comment">//第二次调用父构造函数</span><br>    <span class="hljs-built_in">this</span>.height = <span class="hljs-string">&quot;150&quot;</span><br>&#125;<br>Son.prototype = <span class="hljs-keyword">new</span> Father() <span class="hljs-comment">//第一次调用父构造函数</span><br>Son.prototype.run  =  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;i am running&quot;</span>) <br>&#125;<br><span class="hljs-keyword">var</span> mike1 = <span class="hljs-keyword">new</span> Son(<span class="hljs-string">&#x27;xiaoming&#x27;</span>)<br><span class="hljs-keyword">var</span> mike2 = <span class="hljs-keyword">new</span> Son(<span class="hljs-string">&#x27;xiaohong&#x27;</span>)<br>mike1.hobby.push(<span class="hljs-string">&quot;basketball&quot;</span>)<br><span class="hljs-built_in">console</span>.log(mike1.hobby) <span class="hljs-comment">//[&quot;sing&quot;, &quot;jump&quot;, &quot;rap&quot;, &quot;basketball&quot;] </span><br><span class="hljs-built_in">console</span>.log(mike2.hobby) <span class="hljs-comment">//[&quot;sing&quot;, &quot;jump&quot;, &quot;rap&quot;] </span><br>mike1.skills()  <span class="hljs-comment">//QWER</span><br></code></pre></td></tr></table></figure>
+<p>组合继承弥补了原型链和借用构造函数的缺点，将两者的优点融合在一起，但是它也有自己的不足，因为<strong>任何情况下它都会调用两次父构造函数，第一次是在改写子类原型时，第二次是在子类实例化时调用。而且第一次调用时我们会继承父类上的属性，此时继承的属性在原型上，第二次调用时又创建了一遍相同的属性，此时属性在构造函数上，当我们访问继承的属性时，访问的是构造函数上的属性。</strong>由此可见组合继承会在构造函数和原型上创建多余重复的属性。</p>
+<h3 id="4-寄生组合式继承"><a href="#4-寄生组合式继承" class="headerlink" title="4.寄生组合式继承"></a>4.寄生组合式继承</h3><p> 在组合继承中我们通过修改子类原型来继承方法时，会调用父类构造函数，但是站在开发者的角度来说，只不过是想要<strong>拿到父类原型的副本而已，然后将这个副本给到子类原型上</strong>，这样我们就不用为了指定子类型的原型来调用父构造函数。<br>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inheritPrototype</span>(<span class="hljs-params">son, father</span>) </span>&#123;<br>    <span class="hljs-keyword">var</span> prototype = father.prototype <span class="hljs-comment">//创建父类原型副本</span><br>    prototype.constructor = son <span class="hljs-comment">//为副本添加constructor属性，因为重写原型后会丢失默认的constructor</span><br>    son.prototype = prototype <span class="hljs-comment">//将创建的副本赋于子类原型</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Father</span>(<span class="hljs-params">name</span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>.name = name<br>    <span class="hljs-built_in">this</span>.hobby = [<span class="hljs-string">&#x27;sing&#x27;</span>, <span class="hljs-string">&#x27;jump&#x27;</span>, <span class="hljs-string">&#x27;rap&#x27;</span>]<br>&#125;<br>Father.prototype.skills = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;QWER&quot;</span>)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Son</span>(<span class="hljs-params">name</span>) </span>&#123;<br>    Father.call(<span class="hljs-built_in">this</span>, name)  <br>    <span class="hljs-built_in">this</span>.height = <span class="hljs-string">&quot;150&quot;</span><br>&#125;<br>inheritPrototype(Son,Father);<br>Son.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;i am running&quot;</span>)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>上面代码中定义了一个inheritPrototype方法，这个方法接受两个参数子构造函数和父构造函数，方法中每步操作见注释。然后在修改子类原型对象时并没像组合继承里面那样调用父构造函数，而是调用了inheritPrototype方法，再给子类原型上定义自己的方法。<br>这个例子中高效体现在<strong>只调用了一次父构造函数，而且不会像组合继承那样创建不必要的重复的属性。</strong>因此寄生组合式继承是比较理想的继承模式。</p>
+<p>本文参考《JavaScript高级程序设计（第3版）》第6章：面向对象的程序设计，若有理解不足之处，欢迎指出。</p>
+<p>转载请注明出处，谢谢。</p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>余文杰</li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2020/06/06/es5%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF/index.html">http://example.com/2020/06/06/es5%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/" rel="tag">原型链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" rel="tag">手写系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/08/20/JS%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/"><i class="iconfont iconleft"></i>JS函数式编程笔记</a>
+  
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:734775532@qq.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09?tab=repositories">地址</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS链表 - 文杰 BLOG</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="1.单链表
+123456789101112131415..."> 
+  
+  <meta name="author" content="余文杰"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png',
+        wechat: 'https://i.bmp.ovh/imgs/2020/10/c946a2c24fbc9cc9.png'
+      },
+      motto: {
+        api: '',
+        default: '真正的大师，永远都怀着一颗学徒的心。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">JS链表</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09?tab=repositories">地址</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/logo/js.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">JS链表</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>九月 28, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>5970</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <p>1.单链表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">element</span>)</span> &#123;<br>    <span class="hljs-built_in">this</span>.element = element;<br>    <span class="hljs-built_in">this</span>.next = <span class="hljs-literal">undefined</span>;<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LinkedList</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">equalsFn = defaultEquals</span>)</span> &#123;<br>    <span class="hljs-built_in">this</span>.count = <span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">this</span>.header = <span class="hljs-literal">undefined</span>;<br>    <span class="hljs-built_in">this</span>.equalsFn = equalsFn; <span class="hljs-comment">// &#123;4&#125;</span><br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">push</span>(<span class="hljs-params">element</span>)</span> &#123;<br>    <span class="hljs-comment">//向链表中添加元素</span><br>    <span class="hljs-keyword">const</span> node = <span class="hljs-keyword">new</span> Node(element);<br>    <span class="hljs-keyword">let</span> current = <span class="hljs-built_in">this</span>.header;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.header === <span class="hljs-literal">undefined</span>) &#123;<br>      <span class="hljs-built_in">this</span>.header = node;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">while</span> (current.next != <span class="hljs-literal">undefined</span>) &#123;<br>        current = current.next;<br>      &#125;<br>      current.next = node;<br>    &#125;<br>    <span class="hljs-built_in">this</span>.count++;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">removeAt</span>(<span class="hljs-params">index</span>)</span> &#123;<br>    <span class="hljs-comment">//删除指定位置元素</span><br>    <span class="hljs-keyword">if</span> (index &gt;= <span class="hljs-number">0</span> &amp;&amp; index &lt; <span class="hljs-built_in">this</span>.count) &#123;<br>      <span class="hljs-keyword">let</span> current = <span class="hljs-built_in">this</span>.header;<br>      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-built_in">this</span>.header = current.next;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// let currentIndex = 0;</span><br>        <span class="hljs-comment">// let previous;</span><br>        <span class="hljs-comment">// while (currentIndex &lt; index) &#123;</span><br>        <span class="hljs-comment">//   previous = current;</span><br>        <span class="hljs-comment">//   current = current.next;</span><br>        <span class="hljs-comment">//   currentIndex++;</span><br>        <span class="hljs-comment">// &#125;</span><br>        <span class="hljs-comment">// previous.next = current.next;</span><br>        <span class="hljs-keyword">let</span> previous = <span class="hljs-built_in">this</span>.getElementAt(index - <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">let</span> removeEle = <span class="hljs-built_in">this</span>.getElementAt(index);<br>        previous.next = removeEle.next;<br>      &#125;<br>      <span class="hljs-built_in">this</span>.count--;<br>      <span class="hljs-keyword">debugger</span>;<br>      <span class="hljs-keyword">return</span> current.element;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">getElementAt</span>(<span class="hljs-params">index</span>)</span> &#123;<br>    <span class="hljs-comment">//根据下标获取元素</span><br>    <span class="hljs-keyword">if</span> (index &gt;= <span class="hljs-number">0</span> &amp;&amp; index &lt; <span class="hljs-built_in">this</span>.count) &#123;<br>      <span class="hljs-keyword">let</span> current = <span class="hljs-built_in">this</span>.header;<br>      <span class="hljs-keyword">let</span> currentIndex = <span class="hljs-number">0</span>;<br>      <span class="hljs-keyword">while</span> (currentIndex &lt; index) &#123;<br>        current = current.next;<br>        currentIndex++;<br>      &#125;<br>      <span class="hljs-keyword">return</span> current;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">insert</span>(<span class="hljs-params">ele, index</span>)</span> &#123;<br>    <span class="hljs-comment">//在任意位置添加元素</span><br>    <span class="hljs-keyword">let</span> node = <span class="hljs-keyword">new</span> Node(ele);<br>    <span class="hljs-keyword">if</span> (index &gt;= <span class="hljs-number">0</span> &amp;&amp; index &lt; <span class="hljs-built_in">this</span>.count) &#123;<br>      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">0</span>) &#123;<br>        node.next = <span class="hljs-built_in">this</span>.header;<br>        <span class="hljs-built_in">this</span>.header = node;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">let</span> previousEle = <span class="hljs-built_in">this</span>.getElementAt(index - <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">let</span> currentIndex = <span class="hljs-built_in">this</span>.getElementAt(index);<br>        node.next = currentIndex;<br>        previousEle.next = node;<br>      &#125;<br>      <span class="hljs-built_in">this</span>.count++;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">indexOf</span>(<span class="hljs-params">ele</span>)</span> &#123;<br>    <span class="hljs-comment">//根据元素返回第一个该元素下标</span><br>    <span class="hljs-keyword">let</span> current = <span class="hljs-built_in">this</span>.header;<br>    <span class="hljs-keyword">let</span> index = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (index &lt; <span class="hljs-built_in">this</span>.count &amp;&amp; current.element !== ele) &#123;<br>      current = current.next;<br>      index++;<br>    &#125;<br>    <span class="hljs-keyword">return</span> index &lt; <span class="hljs-built_in">this</span>.count ? index : -<span class="hljs-number">1</span>;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">remove</span>(<span class="hljs-params">ele</span>)</span> &#123;<br>    <span class="hljs-comment">//从链表中移除元素</span><br>    <span class="hljs-keyword">const</span> removeIndex = <span class="hljs-built_in">this</span>.indexOf(ele);<br>    <span class="hljs-keyword">if</span> (removeIndex &gt;= <span class="hljs-number">0</span> &amp;&amp; removeIndex &lt;= <span class="hljs-built_in">this</span>.count) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.removeAt(removeIndex);<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">isEmpty</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-comment">//链表是否为空</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.count === <span class="hljs-number">0</span>;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">size</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-comment">//链表大小</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.count;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">getHead</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-comment">//获取表头</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.header;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">toString</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.header === <span class="hljs-literal">null</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">let</span> objString = <span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-built_in">this</span>.header.element&#125;</span>`</span>;<br>    <span class="hljs-keyword">let</span> current = <span class="hljs-built_in">this</span>.header.next;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-built_in">this</span>.size() &amp;&amp; current != <span class="hljs-literal">null</span>; i++) &#123;<br>      objString = <span class="hljs-string">`<span class="hljs-subst">$&#123;objString&#125;</span>,<span class="hljs-subst">$&#123;current.element&#125;</span>`</span>;<br>      current = current.next;<br>    &#125;<br>    <span class="hljs-keyword">return</span> objString;<br>  &#125;<br><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defaultEquals</span>(<span class="hljs-params">a, b</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> a === b;<br>&#125;<br><br><span class="hljs-keyword">const</span> test = <span class="hljs-keyword">new</span> LinkedList();<br></code></pre></td></tr></table></figure>
+<p>2.双向链表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//双向链表</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DoublyNode</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Node</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">element, next, prev</span>)</span> &#123;<br>    <span class="hljs-built_in">super</span>(element, next);<br>    <span class="hljs-built_in">this</span>.prev = prev;<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DoublyLinkedList</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">LinkedList</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">equalsFn = defaultEquals</span>)</span> &#123;<br>    <span class="hljs-built_in">super</span>(equalsFn);<br>    <span class="hljs-built_in">this</span>.tail = <span class="hljs-literal">undefined</span>; <span class="hljs-comment">//保存对链表最后一个元素的引用</span><br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">insert</span>(<span class="hljs-params">ele, index</span>)</span>&#123;<br>      <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params">index &gt;=<span class="hljs-number">0</span> &amp;&amp; index &lt;= <span class="hljs-built_in">this</span>.count</span>)</span>&#123;<br>          <span class="hljs-keyword">const</span> node = <span class="hljs-keyword">new</span> DoublyNode(ele);<br>          <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params">index === <span class="hljs-number">0</span></span>)</span>&#123;<br>              <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params"><span class="hljs-built_in">this</span>.header === <span class="hljs-literal">undefined</span></span>)</span>&#123;<br>                  <span class="hljs-built_in">this</span>.header = node;<br>                  <span class="hljs-built_in">this</span>.tail = node;<br>              &#125; <span class="hljs-keyword">else</span> &#123;<br>                node.next = <span class="hljs-built_in">this</span>.header;<br>                current.prev = node;<br>                <span class="hljs-built_in">this</span>.header = node;<br>              &#125;<br>          &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (index === <span class="hljs-built_in">this</span>.count)&#123;<br>              current = <span class="hljs-built_in">this</span>.tail;<br>              current.next = node;<br>              node.prev = current;<br>              <span class="hljs-built_in">this</span>.tail = node;<br><br>          &#125; <span class="hljs-keyword">else</span> &#123;<br>              <span class="hljs-keyword">let</span> previous = <span class="hljs-built_in">this</span>.getElementAt(index - <span class="hljs-number">1</span>);<br>              <span class="hljs-keyword">let</span> current = previous.next;<br>              previous.next = node;<br>              node.prev = previous;<br>              node.next = current;<br>              current.prev = node;<br>          &#125;<br><br>          <span class="hljs-built_in">this</span>.count++;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>      &#125;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">removeAt</span>(<span class="hljs-params">index</span>)</span>&#123;<br>    <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params">index &gt;=<span class="hljs-number">0</span> &amp;&amp; index &lt; <span class="hljs-built_in">this</span>.count</span>)</span>&#123;<br>      <span class="hljs-keyword">let</span> current = <span class="hljs-built_in">this</span>.header;<br>      <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params">index === <span class="hljs-number">0</span></span>)</span>&#123;<br>        <span class="hljs-built_in">this</span>.header = <span class="hljs-built_in">this</span>.header.next;<br><br>        <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params"><span class="hljs-built_in">this</span>.count === <span class="hljs-number">1</span></span>)</span>&#123;<br>          <span class="hljs-built_in">this</span>.tail = <span class="hljs-literal">undefined</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          <span class="hljs-built_in">this</span>.header.prev = <span class="hljs-literal">undefined</span>;<br>        &#125;<br><br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (index === <span class="hljs-built_in">this</span>.count -<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-keyword">let</span> current = <span class="hljs-built_in">this</span>.getElementAt(index);<br>        <span class="hljs-built_in">this</span>.tail = current.prev;<br>        <span class="hljs-keyword">let</span> previous = <span class="hljs-built_in">this</span>.getElementAt(index - <span class="hljs-number">1</span>);<br>        previous.next = <span class="hljs-literal">undefined</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">let</span> current = <span class="hljs-built_in">this</span>.getElementAt(index);<br>        <span class="hljs-keyword">let</span> previous = <span class="hljs-built_in">this</span>.getElementAt(index - <span class="hljs-number">1</span>);<br>        current.next.prev = previous;<br>        previous.next = current.next;<br>      &#125;;<br>      <span class="hljs-built_in">this</span>.count --;<br>      <span class="hljs-keyword">return</span> current.element;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;<br>  &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>余文杰</li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2020/09/28/JS%E9%93%BE%E8%A1%A8/index.html">http://example.com/2020/09/28/JS%E9%93%BE%E8%A1%A8/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" rel="tag">手写系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/10/11/HTTP%E5%8D%8F%E8%AE%AE/"><i class="iconfont iconleft"></i>HTTP协议</a>
+  
+  
+    <a href="/2020/09/07/JS%E5%AE%8C%E6%95%B4%E7%9A%84%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0/">JS完整的节流函数<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:734775532@qq.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09?tab=repositories">地址</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

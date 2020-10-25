@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS函数式编程笔记 - 文杰 BLOG</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="函数式编程理论基础1.数学中的函数书写如下形式  f(..."> 
+  
+  <meta name="author" content="余文杰"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png',
+        wechat: 'https://i.bmp.ovh/imgs/2020/10/c946a2c24fbc9cc9.png'
+      },
+      motto: {
+        api: '',
+        default: '真正的大师，永远都怀着一颗学徒的心。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">JS函数式编程笔记</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09?tab=repositories">地址</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/logo/js.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">JS函数式编程笔记</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>八月 20, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3464</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="函数式编程理论基础"><a href="#函数式编程理论基础" class="headerlink" title="函数式编程理论基础"></a>函数式编程理论基础</h2><p>1.数学中的函数书写如下形式  f(x)=y。一个函数F，以x作为参数，并返回输出y。这很简单，但是包含几个关键点，函数必须总是接受一个参数，函数必须返回一个值，函数应该依据接收到的参数，而不是外部环境运行，对于给定x只会输出唯一的y，也就是纯函数。<br>2.函数式编程不是用函数来编程，也不是传统的面向过程编程。主旨在于将复杂的函数分解成简单的函数。运算过程尽量写成一系列嵌套的函数调用。<br>3.通俗写法function xx(){}区别开函数和方法。方法要与指定的对象绑定，函数可以直接调用。<br>4.函数式编程相对与计算机的历史而言是一个非常古老的概念。函数式编程的基础模型来源与lambda演算（x=&gt;x*x),即他来源于数学，所谓函数式编程就是用数学的方式编程，即要抛弃类似if，else，for等这些概念，因为数学里面没有这些概念。<br>5.随着react高阶函数的火热，函数式编程的概念也逐步升温。<br>####重要概念<br>1.函数是”一等公民”。<br>2.只用“表达式”，不用“语句”。<br>3.没有副作用。<br>4.不修改状态。<br>5.引用透明。</p>
+<h4 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h4><p>1.<strong>纯函数</strong>：对于相同的输入，永远会得到相同的输出，并且没有任何可观察的副作用，也不依赖外部环境状态。举个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> xs = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br><span class="hljs-comment">//Array.slice是纯函数，因为他没有副作用，对于固定的输入，输出总是固定,</span><br><span class="hljs-comment">//splice就不是，因为他会改变原数组</span><br>xs.slice(<span class="hljs-number">0</span>,<span class="hljs-number">3</span>) <br>xs.slice(<span class="hljs-number">0</span>,<span class="hljs-number">3</span>) <br>xs.splice(<span class="hljs-number">0</span>,<span class="hljs-number">3</span>)<br>xs.splice(<span class="hljs-number">0</span>,<span class="hljs-number">3</span>)  <br></code></pre></td></tr></table></figure>
+<p>纯函数不仅可以有效降低系统的复杂度，还有很多特性，比如可缓存性，但缺点是纯函数内部扩展性较差</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//不纯的</span><br><span class="hljs-keyword">var</span> min = <span class="hljs-number">18</span><br><span class="hljs-keyword">var</span> checkage = <span class="hljs-function"><span class="hljs-params">age</span>=&gt;</span> age &gt; min;<br><span class="hljs-comment">//纯的</span><br><span class="hljs-keyword">var</span> checkage = <span class="hljs-function"><span class="hljs-params">age</span>=&gt;</span> age &gt; <span class="hljs-number">18</span>;<br></code></pre></td></tr></table></figure>
+<p>在不纯的版本中，chackage不仅取决与age还有外部依赖的变量min。<br>纯的checkage把18写在了函数内部，扩展性较差。<br>2.<strong>偏应用函数：</strong>传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数；偏函数之所以‘偏’，就在与其只能处理啊那些能与至少一个case语句匹配的输入，而不能处理所有可能的输入。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> partial = <span class="hljs-function">(<span class="hljs-params">f,...args</span>)=&gt;</span><br>            (...moreArgs)=&gt;<br>           f(...args,...moreArgs)<br></code></pre></td></tr></table></figure>
+<p>3.<strong>函数的柯里化：</strong>柯里化通过偏应用函数实现。它是把一个多参数函数转换为一个嵌套一元函数的过程。传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> checkage = <span class="hljs-function"><span class="hljs-params">min</span> =&gt;</span> (<span class="hljs-function"><span class="hljs-params">age</span> =&gt;</span> age &gt; min)<br><span class="hljs-keyword">var</span> checkage18  = checkage(<span class="hljs-number">18</span>)<br>checkage18(<span class="hljs-number">20</span>)<br></code></pre></td></tr></table></figure>
+<p>这里柯里化解决了纯函数硬编码的问题。即把18写在函数内部，我们其实并不想函数这么死板。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//柯里化之前</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add</span>(<span class="hljs-params">x,y</span>)</span>&#123;<br> <span class="hljs-keyword">return</span> x + y;<br>&#125;<br>add(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<span class="hljs-comment">//3</span><br><span class="hljs-comment">//柯里化之后</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addX</span>(<span class="hljs-params">y</span>)</span>&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>)</span>&#123;<br>    <span class="hljs-keyword">return</span> x + y;<br>  &#125;<br>&#125;<br>addX(<span class="hljs-number">2</span>)(<span class="hljs-number">1</span>)<span class="hljs-comment">//3</span><br></code></pre></td></tr></table></figure>
+<p>函数的反柯里化code</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">Function</span>.prototype.uncurring = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-keyword">var</span> self = <span class="hljs-built_in">this</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-keyword">var</span> obj = <span class="hljs-built_in">Array</span>.prototype.shift.call(<span class="hljs-built_in">arguments</span>);<br>        <span class="hljs-keyword">return</span> self.apply(obj,<span class="hljs-built_in">arguments</span>);<br>    &#125;<br>&#125;<br><span class="hljs-keyword">var</span> push = <span class="hljs-built_in">Array</span>.prototype.push.uncurring(),<br>obj = &#123;&#125;<br>push(obj,<span class="hljs-string">&quot;first&quot;</span>,<span class="hljs-string">&quot;two&quot;</span>)<br><span class="hljs-built_in">console</span>.log(obj)<br></code></pre></td></tr></table></figure>
+<p>函数的柯里化code</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> curry = <span class="hljs-function">(<span class="hljs-params">fn, arr = []</span>) =&gt;</span> <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span><br>    (<span class="hljs-function"><span class="hljs-params">arg</span> =&gt;</span> (arg.length === fn.length ? fn(...arg) :<br>        curry(fn, arg)))([<br>            ...arr,<br>            ...args<br>        ])<br><span class="hljs-keyword">let</span> curryTest = curry(<span class="hljs-function">(<span class="hljs-params">a,b,c,d</span>) =&gt;</span> a + b + c + d)<br><span class="hljs-keyword">var</span> num1 = curryTest(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)(<span class="hljs-number">4</span>) <br><span class="hljs-keyword">var</span> num2 = curryTest(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)(<span class="hljs-number">4</span>)(<span class="hljs-number">3</span>)<br><span class="hljs-keyword">var</span> num3 = curryTest(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>,<span class="hljs-number">4</span>)<br><span class="hljs-built_in">console</span>.log(num1, num2, num3); <span class="hljs-comment">// 10 ,10 ,10</span><br></code></pre></td></tr></table></figure>
+<p><strong>柯里化优缺点：</strong>事实上柯里化上一种“预加载”函数的方法，通过传递较少的参数，得到一个已经记住了这些参数的新函数，某种意义上讲，这是一种对参数的“缓存”，是一个非常高效的便携函数的方法。<br>4.<strong>函数组合：</strong>纯函数以及如何把它柯里化写出的洋葱代码h(g(f(x))),为了解决函数嵌套的问题，我们需要用到“函数组合”。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> compose = <span class="hljs-function">(<span class="hljs-params">f, g</span>) =&gt;</span> (<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> f(g(x)));<br><span class="hljs-keyword">var</span> first = <span class="hljs-function"><span class="hljs-params">arr</span> =&gt;</span> arr[<span class="hljs-number">0</span>];<br><span class="hljs-keyword">var</span> reverse = <span class="hljs-function"><span class="hljs-params">arr</span> =&gt;</span> arr.reverse();<br><span class="hljs-keyword">var</span> last = compose(first, reverse);<br><span class="hljs-built_in">console</span>.log(last([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]));<span class="hljs-comment">//5</span><br><span class="hljs-comment">//组合一个函数获取数组最后一项</span><br></code></pre></td></tr></table></figure>
+<h4 id="更加专业的术语"><a href="#更加专业的术语" class="headerlink" title="更加专业的术语"></a>更加专业的术语</h4><p><strong>高阶函数，尾调用优化PTC，容器，Functor，错误处理，Either，AP，IO，Monad</strong><br>1.<strong>高阶函数：</strong>函数当参数，把传入的函数做一个封装，然后返回这个函数，达到更高程度的抽象。<br> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//命令式</span><br><span class="hljs-keyword">var</span> add = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a,b</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> a + b<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">math</span>(<span class="hljs-params">func,array</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> func(array[<span class="hljs-number">0</span>], array[<span class="hljs-number">1</span>])<br>&#125;<br><br>math(add, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>])<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li>它是一等公民</li>
+<li>它以一个函数作为参数</li>
+<li>它以一个函数作为返回结果</li>
+</ul>
+<p>2.<strong>尾调用优化：</strong>指函数内部的最后一个动作是函数调用。该调用的返回值，直接返回给函数。函数调用自身，称为递归。如果尾调用自身，就称为尾递归。递归需要保存大量的调用记录，很容易发生栈溢出错误，如果使用尾递归优化，将递归变为循环，那么只需要保存一个调用记录，这样就不会发生栈溢出错误了。<br>3.<strong>范畴与容器</strong></p>
+<ul>
+<li>我们可以把“范畴”想象成是一个容器，里面包含两样对象。值（value），值的变形关系，也就是函数。</li>
+<li>范畴论使用函数，表达范畴之间的关系。</li>
+<li>伴随着范畴论的发展，就发展出一整套函数的运算方法。这套方法起初只用与数学运算，后来有人将它在计算机上实现了，就变成了今天的“函数式编程”。</li>
+<li>本质上，函数式编程只是范畴论的运算方法，跟数理逻辑，微积分等都是一类，都是数学方法，只是碰巧他能用来写程序。为什么函数式编程要求函数必须是纯的，不能有副作用？因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数运算的法则了。</li>
+</ul>
+<p>4.<strong>Functor</strong></p>
+<ul>
+<li>函数不仅可以用于同一个范畴之间值的转换，还可以用于将一个范畴转成另一个范畴，这就涉及到了函子（Functor）</li>
+<li>函子是函数式编程里面最重要的数据类型，也是基本的运算单位和功能单位。它首先是一种范畴，也就是说，是一个容器，包含了值和变形关系。比较特殊的是，他的变形关系可以依次作用于每一个值，将当前容器变成另一个容器。</li>
+</ul>
+<p>更新中。。。</p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>余文杰</li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2020/08/20/JS%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/index.html">http://example.com/2020/08/20/JS%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/08/23/JS%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/"><i class="iconfont iconleft"></i>JS隐式转换</a>
+  
+  
+    <a href="/2020/06/06/es5%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF/">ES5中的继承<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:734775532@qq.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09?tab=repositories">地址</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

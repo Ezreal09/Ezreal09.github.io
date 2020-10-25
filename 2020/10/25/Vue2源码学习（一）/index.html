@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue2源码学习（一） - 文杰 BLOG</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="本文目标：实现一个自己的简单Vue双向绑定demo
+
+..."> 
+  
+  <meta name="author" content="余文杰"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png',
+        wechat: 'https://i.bmp.ovh/imgs/2020/10/c946a2c24fbc9cc9.png'
+      },
+      motto: {
+        api: '',
+        default: '真正的大师，永远都怀着一颗学徒的心。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">Vue2源码学习（一）</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09?tab=repositories">地址</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/logo/vue.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Vue2源码学习（一）</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 25, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>7546</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="本文目标：实现一个自己的简单Vue双向绑定demo"><a href="#本文目标：实现一个自己的简单Vue双向绑定demo" class="headerlink" title="本文目标：实现一个自己的简单Vue双向绑定demo"></a>本文目标：实现一个自己的简单Vue双向绑定demo</h2><!-- ![alt](https://ftp.bmp.ovh/imgs/2020/10/95d3fdee6a5c12d5.png) -->
+
+<p><strong>在vue中，本地代码会通过compile编译成render函数，在编译的过程中，会收集到有哪些变量，并把这些变量和watcher关联，当浏览器在执行render函数时，会获取到vue实例中定义的变量。而在新建vue实例时，会通过Object.defineProperty来重新设置传入的data，当render函数执行获取变量时，watcher就会触发get方法，将当前water添加到当前vue的dep实例里，在修改数据时，则遍历当前vue实例的dep内部所有的watcher去触发更新。</strong></p>
+<p>清楚这些以后，就可以写代码了：</p>
+<ol>
+<li><p>新建一个myvue文件夹并用 <em>npm init -y</em>初始化</p>
+</li>
+<li><p>进入目录 安装webpack（这里是webpack4）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">npm i webpack@<span class="hljs-number">4</span> wecpack-cli@<span class="hljs-number">4</span>;<br></code></pre></td></tr></table></figure></li>
+<li><p>新建webpack.config.js配置文件，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-built_in">module</span>.exports = &#123;<br>    entry:<span class="hljs-string">&#x27;./main.js&#x27;</span>,<br>    output: &#123;<br>        filename: <span class="hljs-string">&#x27;bundle.js&#x27;</span>,<br>        path:path.resolve(__dirname, <span class="hljs-string">&#x27;dist&#x27;</span>)<br>    &#125;,<br>    <span class="hljs-comment">// devtool:&#x27;source-map&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>添加index.html引入打包后的js，如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Document<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>&#123;&#123;text&#125;&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./dist/bundle.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>package.json中配置打包命令,build：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;vue&quot;</span>,<br>  <span class="hljs-attr">&quot;version&quot;</span>: <span class="hljs-string">&quot;1.0.0&quot;</span>,<br>  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-attr">&quot;main&quot;</span>: <span class="hljs-string">&quot;main.js&quot;</span>,<br>  <span class="hljs-attr">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;test&quot;</span>: <span class="hljs-string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>,<br>    <span class="hljs-attr">&quot;build&quot;</span>: <span class="hljs-string">&quot;webpack&quot;</span><br>  &#125;,<br>  <span class="hljs-attr">&quot;keywords&quot;</span>: [],<br>  <span class="hljs-attr">&quot;author&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-attr">&quot;license&quot;</span>: <span class="hljs-string">&quot;ISC&quot;</span>,<br>  <span class="hljs-attr">&quot;dependencies&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;webpack&quot;</span>: <span class="hljs-string">&quot;^4.44.2&quot;</span>,<br>    <span class="hljs-attr">&quot;webpack-cli&quot;</span>: <span class="hljs-string">&quot;^4.1.0&quot;</span>,<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>新建mian.js文件，如下：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./src/Vue&#x27;</span>;<br><br><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> Vue(&#123;<br>    el: <span class="hljs-string">&#x27;app&#x27;</span>,<br>    data: &#123;<br>        text: <span class="hljs-string">&#x27;hello world&#x27;</span><br>    &#125;<br>&#125;);<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) &#123;<br>    vm[<span class="hljs-string">&quot;text&quot;</span>] = i;<span class="hljs-comment">//99 批处理</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="5">
+<li>main.js中从src目录下引入了Vue，所以我们新建src目录，并在里面新建我们打造vue-demo需要的文件，首先新建Vue.js:</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">import</span> observe <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./Observe&quot;</span>;<br><span class="hljs-keyword">import</span> Compile <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Complie&#x27;</span>;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vue</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">opitions</span>)</span> &#123;<br>        <span class="hljs-built_in">this</span>.data = opitions.data;<br>        <span class="hljs-keyword">var</span> data = <span class="hljs-built_in">this</span>.data;<br>        observe(data, <span class="hljs-built_in">this</span>);<br>        <span class="hljs-keyword">var</span> id = opitions.el;<br>        <br>        <span class="hljs-keyword">var</span> dom = <span class="hljs-keyword">new</span> Compile(<span class="hljs-built_in">document</span>.getElementById(id), <span class="hljs-built_in">this</span>);<br>        <span class="hljs-built_in">document</span>.getElementById(id).appendChild(dom);<br>    &#125;<br>    <br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Vue;<br></code></pre></td></tr></table></figure>
+<p>在Vue.js 文件中我们看到，在初始化vue实例时，首先获取传入的data，并将data和当前实例传给了observe函数，observe函数的作用就是将data对象中的每一个数据绑定到当前实例并用Object.defineProperty改写数据方法。<br>然后获取到dom中的元素，通过compile编译成可以直接挂载的dom，最后挂载在页面中。接下来新建Observe和Complie.</p>
+<ol start="6">
+<li>Observe.js</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> Dep <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Dep&#x27;</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defineReactive</span>(<span class="hljs-params">vm, key, val</span>) </span>&#123;<br>    <span class="hljs-keyword">var</span> dep = <span class="hljs-keyword">new</span> Dep();<br><br>    <span class="hljs-built_in">Object</span>.defineProperty(vm, key, &#123;<br><br>        <span class="hljs-function"><span class="hljs-title">get</span>(<span class="hljs-params"></span>)</span>&#123;<br>            <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params">Dep.target</span>)</span>&#123;<br>                dep.addSub(Dep.target);<br>            &#125;<br>            <span class="hljs-keyword">return</span> val;<br>        &#125;,<br><br>        <span class="hljs-function"><span class="hljs-title">set</span>(<span class="hljs-params">newval</span>)</span> &#123;<br>            <span class="hljs-keyword">if</span>(newval === val) <span class="hljs-keyword">return</span>;<br>            val = newval;<br>            dep.notify()<br>        &#125;<br><br>    &#125;)<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">observe</span>(<span class="hljs-params">obj, vm</span>) </span>&#123;<br>    <span class="hljs-built_in">Object</span>.keys(obj).forEach(<span class="hljs-function"><span class="hljs-params">key</span> =&gt;</span> &#123;<br>        defineReactive(vm, key, obj[key]);<br>    &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>complie.js</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> Watcher <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Watcher&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Compile</span>(<span class="hljs-params">node, vm</span>) </span>&#123;<br><br>    <span class="hljs-keyword">if</span> (node) &#123;<br>  <br>      <span class="hljs-built_in">this</span>.$frag = <span class="hljs-built_in">this</span>.nodeToFragment(node, vm);<br>  <br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.$frag;<br>    &#125;<br>  &#125;<br>  Compile.prototype = &#123;<br><br>    nodeToFragment: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">node, vm</span>) </span>&#123;<br>      <span class="hljs-keyword">var</span> self = <span class="hljs-built_in">this</span>;<br>      <span class="hljs-keyword">var</span> frag = <span class="hljs-built_in">document</span>.createDocumentFragment();<span class="hljs-comment">//创建文档片段，不会真实操作dom，存在于内存中</span><br>      <span class="hljs-keyword">var</span> child;<br>  <br>      <span class="hljs-keyword">while</span> (child = node.firstChild) &#123;<br>  <br>        self.compileElement(child, vm);<span class="hljs-comment">// &lt;input type=&quot;text&quot; id=&quot;a&quot; v-model=&quot;text&quot;&gt;</span><br>  <br>        frag.append(child);<br>      &#125;<br>  <br>      <span class="hljs-keyword">return</span> frag;<br>    &#125;,<br>    compileElement: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">node, vm</span>) </span>&#123;<br>      <span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;<br>  <br>      <span class="hljs-comment">//判断元素节点</span><br>      <span class="hljs-keyword">if</span> (node.nodeType === <span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">//&lt;input type=&quot;text&quot; id=&quot;a&quot; v-model=&quot;text&quot;&gt;</span><br>        <span class="hljs-keyword">var</span> attr = node.attributes;<br>        <span class="hljs-comment">// 解析属性</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; attr.length; i++) &#123;<br>  <br>          <span class="hljs-keyword">if</span> (attr[i].nodeName == <span class="hljs-string">&#x27;v-model&#x27;</span>) &#123;<br>            <span class="hljs-keyword">var</span> name = attr[i].nodeValue;<span class="hljs-comment">//text</span><br>  <br>            node.addEventListener(<span class="hljs-string">&#x27;input&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>&#123;<br>              vm[name] = e.target.value;<br>            &#125;);<br>  <br>            <span class="hljs-keyword">new</span> Watcher(vm, node,name, <span class="hljs-string">&#x27;value&#x27;</span>);<br>          &#125;<br>        &#125;;<br>      &#125;<br>  <br>  <br>      <span class="hljs-comment">//&#123;&#123;text&#125;&#125;</span><br>      <span class="hljs-comment">//判断文本节点</span><br>      <span class="hljs-keyword">if</span> (node.nodeType === <span class="hljs-number">3</span>) &#123;<br>  <br>        <span class="hljs-keyword">if</span> (reg.test(node.nodeValue)) &#123;<br>          <span class="hljs-keyword">var</span> name = <span class="hljs-built_in">RegExp</span>.$1;<span class="hljs-comment">//text</span><br>          <span class="hljs-comment">//render </span><br>          name = name.trim();<br>          <span class="hljs-keyword">new</span> Watcher(vm, node, name, <span class="hljs-string">&#x27;nodeValue&#x27;</span>);<br>        &#125;<br>      &#125;<br>    &#125;,<br>  &#125;<br></code></pre></td></tr></table></figure>
+<p>compile中主要是通过正则去匹配文档片段中的特殊字符，并拿到这个节点和相应用到的变量，然后<em>new watcher</em>实例。</p>
+<ol start="8">
+<li>Watcher.js</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> Dep <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Dep&#x27;</span>;<br><span class="hljs-keyword">import</span> Batcher <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Batcher&#x27;</span>;<br><span class="hljs-keyword">let</span> uid = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Watcher</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">vm, node, name, type</span>)</span>&#123;<br>        Dep.target = <span class="hljs-built_in">this</span>;<br>        <span class="hljs-built_in">this</span>.name = name;<br>        <span class="hljs-built_in">this</span>.id = uid++;<br>        <span class="hljs-built_in">this</span>.node = node;<br>        <span class="hljs-built_in">this</span>.vm = vm;<br>        <span class="hljs-built_in">this</span>.type = type;<br>        <br>        <span class="hljs-built_in">this</span>.update()<br>        Dep.target = <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">update</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-built_in">this</span>.get()<br>        <br>        <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params">!<span class="hljs-built_in">this</span>.batcher</span>)</span>&#123;<br>            <span class="hljs-built_in">this</span>.batcher = <span class="hljs-keyword">new</span> Batcher()<br>        &#125;<br>        <span class="hljs-built_in">this</span>.batcher.push(<span class="hljs-built_in">this</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">cb</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-built_in">this</span>.node[<span class="hljs-built_in">this</span>.type] = <span class="hljs-built_in">this</span>.value;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.value);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">get</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-built_in">this</span>.value = <span class="hljs-built_in">this</span>.vm[<span class="hljs-built_in">this</span>.name]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>watcher实例生成时会将Dep.target指向当前watcher实例，当执行update函数时，就会触发cb，cb中获取了当前vue实例中的数据，这样就会触发上面observe中的get方法，在get方法中，将Dep.target也就是当前watcher添加到了vue实例的dep中，然后update执行完毕之后，将Dep.target置为null，这样下次获取这个数据的时候就不会重复添加相同的watcher。而在新的watcer实例生成时，则又会将Dep.target指向watcher。(batcher的作用是批处理，避免不停修改时触发多次)</p>
+<ol start="9">
+<li>Dep.js</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dep</span> </span>&#123;<br>   <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"></span>)</span>&#123;<br>       <span class="hljs-built_in">this</span>.subs = []<br>   &#125;<br><br>   <span class="hljs-function"><span class="hljs-title">addSub</span>(<span class="hljs-params">sub</span>)</span>&#123;<br>       <span class="hljs-built_in">this</span>.subs.push(sub);<br>   &#125;<br><br>   <span class="hljs-function"><span class="hljs-title">notify</span>(<span class="hljs-params"></span>)</span>&#123;<br>       <span class="hljs-built_in">this</span>.subs.forEach(<span class="hljs-function"><span class="hljs-params">sub</span> =&gt;</span> &#123;<br>           sub.update()<br>       &#125;)<br>   &#125;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Dep;<br></code></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>Batcher.js</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Batcher</span></span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-built_in">this</span>.reset()<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">reset</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-built_in">this</span>.has = &#123;&#125;;<br>        <span class="hljs-built_in">this</span>.queue = [];<br>        <span class="hljs-built_in">this</span>.waiting = <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">push</span>(<span class="hljs-params">job</span>)</span>&#123;<br>        <span class="hljs-keyword">let</span> id = job.id;<br>        <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params">!<span class="hljs-built_in">this</span>.has[id]</span>)</span>&#123;<br>            <span class="hljs-built_in">this</span>.queue.push(job);<br>            <span class="hljs-built_in">this</span>.has[id] = <span class="hljs-literal">true</span>;<br>            <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-params">!<span class="hljs-built_in">this</span>.waiting</span>)</span>&#123;<br>                <span class="hljs-built_in">this</span>.waiting = <span class="hljs-literal">true</span>;<br>                <span class="hljs-built_in">Promise</span>.resolve().then(<span class="hljs-function">()=&gt;</span>&#123;<br>                    <span class="hljs-built_in">this</span>.flush()<br>                &#125;)<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">flush</span>(<span class="hljs-params"></span>)</span>&#123;<br><br>        <span class="hljs-built_in">this</span>.queue.forEach(<span class="hljs-function"><span class="hljs-params">job</span> =&gt;</span>&#123;<br>            job.cb()<br>        &#125;)<br><br>        <span class="hljs-built_in">this</span>.reset()<br>    &#125;<br><br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol start="11">
+<li>执行npm run build,在浏览器中打开index.html即可看见一件简单的双向绑定demo</li>
+</ol>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>余文杰</li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2020/10/25/Vue2%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">http://example.com/2020/10/25/Vue2%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue2/" rel="tag">Vue2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" rel="tag">源码学习</a></li></ul>
+
+        
+<nav class="nav">
+  
+  
+    <a href="/2020/10/18/JS%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/">JS实现简单的发布订阅模式<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:734775532@qq.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09?tab=repositories">地址</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

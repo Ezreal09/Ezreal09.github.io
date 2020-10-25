@@ -7,13 +7,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>标签 - 文杰 BLOG</title>
+  <title>HTTP协议 - 文杰 BLOG</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
 
   
   
+  <meta name="description" content="目录
+当我们输入网址后发生了什么
+HTTP协议详解
+C..."> 
   
   <meta name="author" content="余文杰"> 
 
@@ -105,7 +109,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">标签</div>
+  <div class="center">HTTP协议</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -152,27 +156,51 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="/images/logo/js.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">标签</h1>
+    <h1 class="head-title">HTTP协议</h1>
     <div class="head-info">
-      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 25, 2020</span
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 11, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>0</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1510</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        
+        <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>当我们输入网址后发生了什么</li>
+<li>HTTP协议详解</li>
+<li>Cookie与Session</li>
+<li>HTTP缓存机制</li>
+</ul>
+<h5 id="浏览器行为与HTTP协议"><a href="#浏览器行为与HTTP协议" class="headerlink" title="浏览器行为与HTTP协议"></a>浏览器行为与HTTP协议</h5><p><img   class="lazyload" data-original="https://upload-images.jianshu.io/upload_images/23660000-dc298f321a71d0be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br>主要处理流程：<br>1、输入网址并回车<br>2、解析域名<br>3、浏览器发送HTTP请求<br>4、服务器处理请求<br>5、服务器返回HTML响应<br>6、浏览器处理HTML页面<br>7、继续请求其他资源</p>
+<h5 id="了解TCP-IP协议栈"><a href="#了解TCP-IP协议栈" class="headerlink" title="了解TCP/IP协议栈"></a>了解TCP/IP协议栈</h5><ol>
+<li>应用层（应用层，表示层，会话层）<br>为用户提供所需要的各种服务，例如：HTTP、FTP、DNS、SMTP等.</li>
+<li>传输层<br>为应用层实体提供端到端的通信功能，保证数据包的顺序传送及数据的完整性。<br>该层定义了两个主要的协议：传输控制协议（TCP）和用户数据报协议（UDP).</li>
+<li>网络层<br>主要解决主机到主机的通信问题。IP协议是网际互联层最重要的协议。</li>
+<li>网络接口层（数据链路层，物理层）<br>负责监视数据在主机和网络之间的交换。<h5 id="HTTP的工作过程"><a href="#HTTP的工作过程" class="headerlink" title="HTTP的工作过程"></a>HTTP的工作过程</h5>一次HTTP操作称为一个事务，其工作过程可分为四步：</li>
+</ol>
+<p>1)首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始。<br>2)建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符(URL)、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。<br>3)服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。<br>4)客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。<br>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了。</p>
+<h5 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h5><p>1xx：指示信息–表示请求已接收，继续处理<br>2xx：成功–表示请求已被成功接收、理解、接受<br>3xx：重定向–要完成请求必须进行更进一步的操作<br>4xx：客户端错误–请求有语法错误或请求无法实现<br>5xx：服务器端错误–服务器未能实现合法的请求</p>
+<h5 id="cookies与session"><a href="#cookies与session" class="headerlink" title="cookies与session"></a>cookies与session</h5><p>Cookies是保存在客户端的小段文本，随客户端点每一个请求发送该url下的所有cookies到服务器端。</p>
+<p> Session则保存在服务器端，通过唯一的值sessionID来区别每一个用户。SessionID随每个连接请求发送到服务器，服务器根据sessionID来识别客户端，再通过session 的key获取session值。</p>
+<p>#####与Cookie相关的HTTP扩展头<br>1)Cookie：客户端将服务器设置的Cookie返回到服务器;<br>2)Set-Cookie：服务器向客户端设置Cookie;<br>服务器在响应消息中用Set-Cookie头将Cookie的内容回送给客户端，客户端在新的请求中将相同的内容携带在Cookie头中发送给服务器。从而实现会话的保持。</p>
+<p>#####HTTP缓存机制<br>缓存会根据请求保存输出内容的副本，例如html页面，图片，文件，当下一个请求来到的时候：如果是相同的URL，缓存直接使用副本响应访问请求，而不是向源服务器再次发送请求。<br>缓存的优点：<br>减少相应延迟<br>减少网络带宽消耗<br><img   class="lazyload" data-original="https://upload-images.jianshu.io/upload_images/23660000-eab05eed363d7e5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p>#####两种缓存策略<br>强制缓存与对比缓存</p>
+<ul>
+<li>强制缓存，服务器通知浏览器一个缓存时间，在缓存时间内，下次请求，直接用缓存，不在时间内，执行比较缓存策略。</li>
+<li>比较缓存，将缓存信息中的Etag和Last-Modified通过请求发送给服务器，由服务器校验，返回304状态码时，浏览器直接使用缓存。<br>Etag/If-None-Match策略<br>Last-Modified/If-Modified-Since策略</li>
+</ul>
+
       </section>
       <section class="extra">
         
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>余文杰</li>
-  <li><strong>本文链接：</strong><a href="http://example.com/about/index.html">http://example.com/about/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2020/10/11/HTTP%E5%8D%8F%E8%AE%AE/index.html">http://example.com/2020/10/11/HTTP%E5%8D%8F%E8%AE%AE/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -190,7 +218,18 @@
 </section>
         
         
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li></ul>
+
         
+<nav class="nav">
+  
+    <a href="/2020/10/18/JS%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/"><i class="iconfont iconleft"></i>JS实现简单的发布订阅模式</a>
+  
+  
+    <a href="/2020/09/28/JS%E9%93%BE%E8%A1%A8/">JS链表<i class="iconfont iconright"></i></a>
+  
+</nav>
+
       </section>
       
       <section class="comments">
