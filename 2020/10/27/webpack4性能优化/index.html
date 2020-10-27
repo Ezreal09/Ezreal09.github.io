@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>webpack4性能优化 - Ezreal BLOG</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="好用的webpack4插件speed-measure-..."> 
+  
+  <meta name="author" content="Ezreal"> 
+
+  
+    <link rel="icon" href="/images/icons/blog.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/blog.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/blog.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/blog.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/blog.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png',
+        wechat: 'https://i.bmp.ovh/imgs/2020/10/c946a2c24fbc9cc9.png'
+      },
+      motto: {
+        api: '',
+        default: '真正的大师，永远都怀着一颗学徒的心。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">webpack4性能优化</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09">地址</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/logo/webpack.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">webpack4性能优化</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 27, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1105</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="好用的webpack4插件"><a href="#好用的webpack4插件" class="headerlink" title="好用的webpack4插件"></a>好用的webpack4插件</h2><h3 id="speed-measure-webpack-plugin"><a href="#speed-measure-webpack-plugin" class="headerlink" title="speed-measure-webpack-plugin"></a>speed-measure-webpack-plugin</h3><p>打包速度分析插件</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs q">npm install --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span> speed-measure-webpack-plugin<br><br></code></pre></td></tr></table></figure>
+<p>具体配置查看<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/speed-measure-webpack-plugin">speed-measure-webpack-plugin</a>，配置完成之后执行打包命令即可在终端看见打包时间分析。</p>
+<h3 id="progress-bar-webpack-plugin"><a href="#progress-bar-webpack-plugin" class="headerlink" title="progress-bar-webpack-plugin"></a>progress-bar-webpack-plugin</h3><p>打包进度展示</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gauss">npm install --<span class="hljs-keyword">save</span>-dev progress-<span class="hljs-built_in">bar</span>-webpack-plugin<br><br></code></pre></td></tr></table></figure>
+<p>具体配置查看<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/progress-bar-webpack-plugin">progress-bar-webpack-plugin</a>，配置完成之后执行打包命令即可在终端看见打包进度。</p>
+<h3 id="cache-loader"><a href="#cache-loader" class="headerlink" title="cache-loader"></a>cache-loader</h3><p>loader的缓存,可以加快打包速度，根据前面的速度分析插件可以看出哪个loader模块打包较慢。进而配置cache-loader。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">npm <span class="hljs-keyword">install </span>--save-dev <span class="hljs-keyword">cache-loader</span><br><span class="hljs-keyword"></span><br></code></pre></td></tr></table></figure>
+<p>具体配置查看<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/cache-loader">cache-loader</a>，配置完成之后打包时间会变快。</p>
+<h3 id="hard-source-webpack-plugin"><a href="#hard-source-webpack-plugin" class="headerlink" title="hard-source-webpack-plugin"></a>hard-source-webpack-plugin</h3><p>cache-loader对指定loader缓存，而hard-source-webpack-plugin对整个工程开启缓存。</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs q">npm install --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span> hard-source-webpack-plugin<br></code></pre></td></tr></table></figure>
+<p>具体配置查看<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/hard-source-webpack-plugin">hard-source-webpack-plugin</a>。</p>
+<h3 id="thread-loader"><a href="#thread-loader" class="headerlink" title="thread-loader"></a>thread-loader</h3><p>开启多核压缩 happypack 多线程编译webpack(小项目不建议使用，复杂项目才有效果)</p>
+<h3 id="optimize-css-assets-webpack-plugin"><a href="#optimize-css-assets-webpack-plugin" class="headerlink" title="optimize-css-assets-webpack-plugin"></a>optimize-css-assets-webpack-plugin</h3><p>CSS的多核压缩</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">$ npm install --<span class="hljs-built_in">save</span>-dev <span class="hljs-built_in">optimize</span>-css-assets-webpack-plugin<br></code></pre></td></tr></table></figure>
+<p>具体配置查看<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/optimize-css-assets-webpack-plugin">optimize-css-assets-webpack-plugin</a>。</p>
+<h3 id="terser-webpack-plugin"><a href="#terser-webpack-plugin" class="headerlink" title="terser-webpack-plugin"></a>terser-webpack-plugin</h3><p>JavaScript的多核压缩可以开启terser-webpack-plugin。(主要是生产环境使用)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">npm <span class="hljs-keyword">install</span> terser-webpack-<span class="hljs-keyword">plugin</span> <span class="hljs-comment">--save-dev</span><br></code></pre></td></tr></table></figure>
+<p>具体配置查看<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/terser-webpack-plugin">terser-webpack-plugin</a>。</p>
+<h3 id="webpack-build-notifier"><a href="#webpack-build-notifier" class="headerlink" title="webpack-build-notifier"></a>webpack-build-notifier</h3><p>打包成功或者失败时的提示</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">npm <span class="hljs-keyword">install</span> webpack-<span class="hljs-keyword">build</span>-notifier <span class="hljs-comment">--save-dev</span><br></code></pre></td></tr></table></figure>
+<p>具体配置查看<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/webpack-build-notifier">webpack-build-notifier</a>。</p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>Ezreal</li>
+  <li><strong>本文链接：</strong><a href="https://ezreal09.github.io/2020/10/27/webpack4%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html">https://ezreal09.github.io/2020/10/27/webpack4%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wecpack4/" rel="tag">wecpack4</a></li></ul>
+
+        
+<nav class="nav">
+  
+  
+    <a href="/2020/10/25/js/js%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98/">JS常见手写面试题<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Ezreal09 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:734775532@qq.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09">地址</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>
