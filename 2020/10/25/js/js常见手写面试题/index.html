@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>JS常见手写面试题 - 文杰 BLOG</title>
+  <title>JS常见手写面试题 - Ezreal BLOG</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
@@ -18,22 +18,22 @@
 
 创建一个..."> 
   
-  <meta name="author" content="余文杰"> 
+  <meta name="author" content="Ezreal"> 
 
   
-    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+    <link rel="icon" href="/images/icons/blog.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/images/icons/blog.png" type="image/png" sizes="32x32">
   
   
-    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+    <link rel="apple-touch-icon" href="/images/icons/blog.png" sizes="180x180">
   
   
-    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+    <meta rel="mask-icon" href="/images/icons/blog.svg" color="#333333">
   
   
-    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileImage" content="/images/icons/blog.png">
     <meta rel="msapplication-TileColor" content="#000000">
   
 
@@ -162,7 +162,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 25, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2419</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2421</span>
     </div>
   </div>
 </section>
@@ -193,12 +193,14 @@
 
 <h3 id="实现instanceOf"><a href="#实现instanceOf" class="headerlink" title="实现instanceOf"></a>实现instanceOf</h3><p>instanceof 运算符用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> myInstanceof = <span class="hljs-function">(<span class="hljs-params">target, origin</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">while</span> (target) &#123;<br>      <span class="hljs-keyword">if</span> (target.__proto__ === origin.prototype) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>      &#125;<br>      target = target.__proto__<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
       </section>
       <section class="extra">
         
         <ul class="copyright">
   
-  <li><strong>本文作者：</strong>余文杰</li>
+  <li><strong>本文作者：</strong>Ezreal</li>
   <li><strong>本文链接：</strong><a href="https://ezreal09.github.io/2020/10/25/js/js%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">https://ezreal09.github.io/2020/10/25/js/js%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
