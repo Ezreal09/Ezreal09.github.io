@@ -160,7 +160,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 29, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>10282</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>10839</span>
     </div>
   </div>
 </section>
@@ -197,7 +197,18 @@
 <p>tapable的作用是各种钩子函数，当new一个钩子函数时可以在这个钩子实例的tap上加上各种任务，个人理解类似把所有任务先放进一个队列，在合适的条件下调用实例的call方法，则会执行队列里面的任务，具体怎么执行要看这个钩子函数是什么类型。这里随便选一种类型的函数写了一个demo：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> &#123;<br>	SyncHook,<br>	SyncBailHook,<br>	SyncWaterfallHook,<br>	SyncLoopHook,<br>	AsyncParallelHook,<br>	AsyncParallelBailHook,<br>	AsyncSeriesHook,<br>	AsyncSeriesBailHook,<br>	AsyncSeriesWaterfallHook<br> &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;tapable&quot;</span>); <span class="hljs-comment">//所有的钩子</span><br><br><span class="hljs-keyword">let</span> queue = <span class="hljs-keyword">new</span> SyncHook([<span class="hljs-string">&#x27;name&#x27;</span>]);<br>queue.tap(<span class="hljs-string">&#x27;1&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name</span>)</span>&#123;<br>	name = name + <span class="hljs-string">&#x27;test&#x27;</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;1&#x27;</span>,name);<br>&#125;)<br>queue.tap(<span class="hljs-string">&#x27;1&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;2&#x27;</span>,name);<br>&#125;)<br>queue.tap(<span class="hljs-string">&#x27;3&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;3&#x27;</span>,name);<br>&#125;)<br>queue.call(<span class="hljs-string">&#x27;webpack&#x27;</span>)<br><br><span class="hljs-comment">//输出</span><br><span class="hljs-comment">// 1 webpack</span><br><span class="hljs-comment">// 2 webpack</span><br><span class="hljs-comment">// 3 webpack</span><br></code></pre></td></tr></table></figure>
 <p>这样一来前面的插件为什么那么写也就清楚了，就是把所有的插件通过钩子的tap方法放进一个任务队列，然后根据具体业务时机执行这个任务函数。</p>
-
+<p>webpack中的compiler类作用：在webpack工作流程中，首先要通过compiler类来收集配置文件信息，然后指挥整体的编译流程，相当于通过compiler构建配置信息。</p>
+<h3 id="webpack工作流程。"><a href="#webpack工作流程。" class="headerlink" title="webpack工作流程。"></a>webpack工作流程。</h3><p>Webpack 的运行流程是一个串行的过程,从启动到结束会依次执行以下流程 :</p>
+<ul>
+<li>初始化参数：从配置文件和 Shell 语句中读取与合并参数,得出最终的参数。</li>
+<li>开始编译：用上一步得到的参数初始化 Compiler 对象,加载所有配置的插件,执行对象的 run 方法开始执行编译。</li>
+<li>确定入口：根据配置中的 entry 找出所有的入口文件。</li>
+<li>编译模块：从入口文件出发,调用所有配置的 Loader 对模块进行翻译,再找出该模块依赖的模块,再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理。</li>
+<li>完成模块编译：在经过第 4 步使用 Loader 翻译完所有模块后,得到了每个模块被翻译后的最终内容以及它们之间的依赖关系。</li>
+<li>输出资源：根据入口和模块之间的依赖关系,组装成一个个包含多个模块的 Chunk,再把每个 Chunk 转换成一个单独的文件加入到输出列表,这步是可以修改输出内容的最后机会。</li>
+<li>输出完成：在确定好输出内容后,根据配置确定输出的路径和文件名,把文件内容写入到文件系统。</li>
+</ul>
+<h1 id="未完待续～，有时间再写"><a href="#未完待续～，有时间再写" class="headerlink" title="未完待续～，有时间再写"></a>未完待续～，有时间再写</h1>
       </section>
       <section class="extra">
         
