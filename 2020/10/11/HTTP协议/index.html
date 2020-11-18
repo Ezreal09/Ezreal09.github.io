@@ -14,10 +14,7 @@
 
   
   
-  <meta name="description" content="目录
-当我们输入网址后发生了什么
-HTTP协议详解
-C..."> 
+  <meta name="description" content="HTTP简介HTTP协议是Hyper Text Tra..."> 
   
   <meta name="author" content="Ezreal"> 
 
@@ -163,33 +160,48 @@ C...">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 11, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1510</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3446</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
-<li>当我们输入网址后发生了什么</li>
-<li>HTTP协议详解</li>
-<li>Cookie与Session</li>
-<li>HTTP缓存机制</li>
-</ul>
-<h5 id="浏览器行为与HTTP协议"><a href="#浏览器行为与HTTP协议" class="headerlink" title="浏览器行为与HTTP协议"></a>浏览器行为与HTTP协议</h5><p><img   class="lazyload" data-original="https://upload-images.jianshu.io/upload_images/23660000-dc298f321a71d0be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br>主要处理流程：<br>1、输入网址并回车<br>2、解析域名<br>3、浏览器发送HTTP请求<br>4、服务器处理请求<br>5、服务器返回HTML响应<br>6、浏览器处理HTML页面<br>7、继续请求其他资源</p>
+        <h3 id="HTTP简介"><a href="#HTTP简介" class="headerlink" title="HTTP简介"></a>HTTP简介</h3><p>HTTP协议是Hyper Text Transfer Protocol(超文本传输协议) 的缩写,是用于从万维网 (WWW:World Wide Web) 服务器传输超文本到本地浏览器的传送协议。</p>
+<p>HTTP是一个基于TCP/IP通信协议来传递数据 (HTML 文件, 图片文件, 查询结果等)。</p>
+<p>HTTP是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。它于1990年提出，经过几年的使用与发展，得到不断地完善和扩展。目前在WWW中使用的是HTTP/1.0的第六版，HTTP/1.1的规范化工作正在进行之中，而且HTTP-NG(Next Generation of HTTP)的建议已经提出。</p>
+<h5 id="浏览器行为与HTTP协议"><a href="#浏览器行为与HTTP协议" class="headerlink" title="浏览器行为与HTTP协议"></a>浏览器行为与HTTP协议</h5><p><img   class="lazyload" data-original="https://res.cloudinary.com/dxowallsa/image/upload/v1605713402/23660000-dc298f321a71d0be_oogvwq.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br>主要处理流程：<br>1、输入网址并回车<br>2、解析域名<br>3、浏览器发送HTTP请求<br>4、服务器处理请求<br>5、服务器返回HTML响应<br>6、浏览器处理HTML页面<br>7、继续请求其他资源</p>
 <h5 id="了解TCP-IP协议栈"><a href="#了解TCP-IP协议栈" class="headerlink" title="了解TCP/IP协议栈"></a>了解TCP/IP协议栈</h5><ol>
 <li>应用层（应用层，表示层，会话层）<br>为用户提供所需要的各种服务，例如：HTTP、FTP、DNS、SMTP等.</li>
 <li>传输层<br>为应用层实体提供端到端的通信功能，保证数据包的顺序传送及数据的完整性。<br>该层定义了两个主要的协议：传输控制协议（TCP）和用户数据报协议（UDP).</li>
 <li>网络层<br>主要解决主机到主机的通信问题。IP协议是网际互联层最重要的协议。</li>
-<li>网络接口层（数据链路层，物理层）<br>负责监视数据在主机和网络之间的交换。<h5 id="HTTP的工作过程"><a href="#HTTP的工作过程" class="headerlink" title="HTTP的工作过程"></a>HTTP的工作过程</h5>一次HTTP操作称为一个事务，其工作过程可分为四步：</li>
+<li>网络接口层（数据链路层，物理层）<br>负责监视数据在主机和网络之间的交换。</li>
 </ol>
-<p>1)首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始。<br>2)建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符(URL)、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。<br>3)服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。<br>4)客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。<br>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了。</p>
+<h5 id="HTTP的工作过程"><a href="#HTTP的工作过程" class="headerlink" title="HTTP的工作过程"></a>HTTP的工作过程</h5><p>一次HTTP操作称为一个事务，其工作过程可分为四步：<br>1)首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始。<br>2)建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符(URL)、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。<br>3)服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。<br>4)客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。<br>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了。</p>
+<h5 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h5><p>GET 请求获取Request-URI所标识的资源<br>POST 在Request-URI所标识的资源后附加新的数据<br>HEAD 请求获取由Request-URI所标识的资源的响应消息报头<br>PUT 请求服务器存储一个资源，并用Request-URI作为其标识<br>DELETE 请求服务器删除Request-URI所标识的资源<br>TRACE 请求服务器回送收到的请求信息，主要用于测试或诊断<br>CONNECT HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。<br>OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求</p>
 <h5 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h5><p>1xx：指示信息–表示请求已接收，继续处理<br>2xx：成功–表示请求已被成功接收、理解、接受<br>3xx：重定向–要完成请求必须进行更进一步的操作<br>4xx：客户端错误–请求有语法错误或请求无法实现<br>5xx：服务器端错误–服务器未能实现合法的请求</p>
 <h5 id="cookies与session"><a href="#cookies与session" class="headerlink" title="cookies与session"></a>cookies与session</h5><p>Cookies是保存在客户端的小段文本，随客户端点每一个请求发送该url下的所有cookies到服务器端。</p>
 <p> Session则保存在服务器端，通过唯一的值sessionID来区别每一个用户。SessionID随每个连接请求发送到服务器，服务器根据sessionID来识别客户端，再通过session 的key获取session值。</p>
-<p>#####与Cookie相关的HTTP扩展头<br>1)Cookie：客户端将服务器设置的Cookie返回到服务器;<br>2)Set-Cookie：服务器向客户端设置Cookie;<br>服务器在响应消息中用Set-Cookie头将Cookie的内容回送给客户端，客户端在新的请求中将相同的内容携带在Cookie头中发送给服务器。从而实现会话的保持。</p>
-<p>#####HTTP缓存机制<br>缓存会根据请求保存输出内容的副本，例如html页面，图片，文件，当下一个请求来到的时候：如果是相同的URL，缓存直接使用副本响应访问请求，而不是向源服务器再次发送请求。<br>缓存的优点：<br>减少相应延迟<br>减少网络带宽消耗<br><img   class="lazyload" data-original="https://upload-images.jianshu.io/upload_images/23660000-eab05eed363d7e5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
-<p>#####两种缓存策略<br>强制缓存与对比缓存</p>
+<h5 id="与Cookie相关的HTTP扩展头"><a href="#与Cookie相关的HTTP扩展头" class="headerlink" title="与Cookie相关的HTTP扩展头"></a>与Cookie相关的HTTP扩展头</h5><p>1)Cookie：客户端将服务器设置的Cookie返回到服务器;<br>2)Set-Cookie：服务器向客户端设置Cookie;<br>服务器在响应消息中用Set-Cookie头将Cookie的内容回送给客户端，客户端在新的请求中将相同的内容携带在Cookie头中发送给服务器。从而实现会话的保持。</p>
+<h5 id="HTTP缓存机制"><a href="#HTTP缓存机制" class="headerlink" title="HTTP缓存机制"></a>HTTP缓存机制</h5><p>缓存会根据请求保存输出内容的副本，例如html页面，图片，文件，当下一个请求来到的时候：如果是相同的URL，缓存直接使用副本响应访问请求，而不是向源服务器再次发送请求。<br>缓存的优点：<br>减少相应延迟<br>减少网络带宽消耗<br><img   class="lazyload" data-original="https://res.cloudinary.com/dxowallsa/image/upload/v1605714898/23660000-eab05eed363d7e5a_lga6da.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<h5 id="不同位置的缓存"><a href="#不同位置的缓存" class="headerlink" title="不同位置的缓存"></a>不同位置的缓存</h5><p>1.<strong>Server Worker</strong>优先级最高，Service Worker 能够操作的缓存是有别于浏览器内部的 memory cache 或者 disk cache 的。我们可以从 Chrome 的 F12 中，Application -&gt; Service Workers 找到。除了位置不同之外，这个缓存是永久性的，即关闭 TAB 或者浏览器，下次打开依然还在(而 memory cache 不是)。</p>
+<p>如果 Service Worker 没能命中缓存，一般情况会使用 fetch() 方法继续获取资源。这时候，浏览器就去 memory cache 或者 disk cache 进行下一次找缓存的工作了。注意：经过 Service Worker 的 fetch() 方法获取的资源，即便它并没有命中 Service Worker 缓存，甚至实际走了网络请求，也会标注为 from ServiceWorker。</p>
+<p>2.<strong>Memory Cache</strong>是内存中的缓存(相对 disk cache 就是硬盘上的缓存). 几乎所有的网络请求资源都会被浏览器自动加入到 memory cache 。但是也正因为数量很大但是浏览器占用的内存不能无限扩大这样两个因素，memory cache 注定只能是个“短期存储”,也就是 TAB 关闭后 memory cache 便就失效了。</p>
+<p>memory cache 机制保证了一个页面中如果有两个相同的请求 (例如两个 src 相同的 ，两个 href 相同的 )都实际只会被请求最多一次，避免浪费。</p>
+<p>在从 memory cache 获取缓存内容时，浏览器会忽视例如 max-age=0, no-cache 等头部配置,如果不想让一个资源进入缓存,短期也不行,那就需要使用 no-store。</p>
+<p>3.<strong>Disk Cache</strong>也叫 HTTP cache，顾名思义是存储在硬盘上的缓存，因此它是持久存储的，是实际存在于文件系统中的。而且它允许相同的资源在跨会话，甚至跨站点的情况下使用，例如两个站点都使用了同一张图片。</p>
+<p>disk cache 会严格根据 HTTP 头信息中的各类字段来判定哪些资源可以缓存，哪些资源不可以缓存；哪些资源是仍然可用的，哪些资源是过时需要重新请求的。当命中缓存之后，浏览器会从硬盘中读取资源，虽然比起从内存中读取慢了一些，但比起网络请求还是快了不少的。绝大部分的缓存都来自 disk cache。</p>
+<p>4.<strong>网络请求</strong>:如果一个请求在上述 3 个位置都没有找到缓存，那么浏览器会正式发送网络请求去获取内容</p>
 <ul>
+<li>根据 Service Worker 中的 handler 决定是否存入 Cache Storage</li>
+<li>根据HTTP头部的相关字段(Cache-control)等决定是否存入缓存 disk cache</li>
+<li>memory cache 保存一份资源 的引用，以备下次使用。</li>
+</ul>
+<h5 id="失效策略"><a href="#失效策略" class="headerlink" title="失效策略"></a>失效策略</h5><ul>
+<li>memory cache 是浏览器为了加快读取缓存速度而进行的自身的优化行为,不受开发者控制，也不受 HTTP 协议头的约束,算是一个黑盒。</li>
+<li>Service Worker 是由开发者编写的额外的脚本，且缓存位置独立.</li>
+<li>disk cache 其实是我们最熟悉也是说的最多的。主要分为强缓存和协商缓存,浏览器加载一个页面的简单流程如下:<br>如果未命中协商缓存，则服务器会将完整的资源返回给浏览器，浏览器加载新资源，并更新缓存。</li>
+</ul>
+<h5 id="强制缓存与对比缓存"><a href="#强制缓存与对比缓存" class="headerlink" title="强制缓存与对比缓存"></a>强制缓存与对比缓存</h5><ul>
 <li>强制缓存，服务器通知浏览器一个缓存时间，在缓存时间内，下次请求，直接用缓存，不在时间内，执行比较缓存策略。</li>
 <li>比较缓存，将缓存信息中的Etag和Last-Modified通过请求发送给服务器，由服务器校验，返回304状态码时，浏览器直接使用缓存。<br>Etag/If-None-Match策略<br>Last-Modified/If-Modified-Since策略</li>
 </ul>
