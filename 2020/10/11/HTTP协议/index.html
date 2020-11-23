@@ -160,7 +160,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 11, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3446</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4082</span>
     </div>
   </div>
 </section>
@@ -176,7 +176,11 @@
 <li>网络层<br>主要解决主机到主机的通信问题。IP协议是网际互联层最重要的协议。</li>
 <li>网络接口层（数据链路层，物理层）<br>负责监视数据在主机和网络之间的交换。</li>
 </ol>
-<h5 id="HTTP的工作过程"><a href="#HTTP的工作过程" class="headerlink" title="HTTP的工作过程"></a>HTTP的工作过程</h5><p>一次HTTP操作称为一个事务，其工作过程可分为四步：<br>1)首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始。<br>2)建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符(URL)、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。<br>3)服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。<br>4)客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。<br>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了。</p>
+<h5 id="HTTP的工作过程"><a href="#HTTP的工作过程" class="headerlink" title="HTTP的工作过程"></a>HTTP的工作过程</h5><p>一次HTTP操作称为一个事务，其工作过程可分为四步：<br>1)首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始。</p>
+<p>2)建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符(URL)、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。</p>
+<p>3)服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。</p>
+<p>4)客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。</p>
+<p>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了。</p>
 <h5 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h5><p>GET 请求获取Request-URI所标识的资源<br>POST 在Request-URI所标识的资源后附加新的数据<br>HEAD 请求获取由Request-URI所标识的资源的响应消息报头<br>PUT 请求服务器存储一个资源，并用Request-URI作为其标识<br>DELETE 请求服务器删除Request-URI所标识的资源<br>TRACE 请求服务器回送收到的请求信息，主要用于测试或诊断<br>CONNECT HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。<br>OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求</p>
 <h5 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h5><p>1xx：指示信息–表示请求已接收，继续处理<br>2xx：成功–表示请求已被成功接收、理解、接受<br>3xx：重定向–要完成请求必须进行更进一步的操作<br>4xx：客户端错误–请求有语法错误或请求无法实现<br>5xx：服务器端错误–服务器未能实现合法的请求</p>
 <h5 id="cookies与session"><a href="#cookies与session" class="headerlink" title="cookies与session"></a>cookies与session</h5><p>Cookies是保存在客户端的小段文本，随客户端点每一个请求发送该url下的所有cookies到服务器端。</p>
@@ -204,6 +208,28 @@
 <h5 id="强制缓存与对比缓存"><a href="#强制缓存与对比缓存" class="headerlink" title="强制缓存与对比缓存"></a>强制缓存与对比缓存</h5><ul>
 <li>强制缓存，服务器通知浏览器一个缓存时间，在缓存时间内，下次请求，直接用缓存，不在时间内，执行比较缓存策略。</li>
 <li>比较缓存，将缓存信息中的Etag和Last-Modified通过请求发送给服务器，由服务器校验，返回304状态码时，浏览器直接使用缓存。<br>Etag/If-None-Match策略<br>Last-Modified/If-Modified-Since策略</li>
+</ul>
+<h5 id="三次握手与四次挥手"><a href="#三次握手与四次挥手" class="headerlink" title="三次握手与四次挥手"></a>三次握手与四次挥手</h5><p><img   class="lazyload" data-original="https://res.cloudinary.com/dxowallsa/image/upload/v1606138796/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%8E%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B_ahbmji.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<ul>
+<li><p>三次握手是什么？</p>
+<p>  当客户端和服务器端建立连接时，需要进行3次通信。</p>
+</li>
+<li><p>为什么三次握手？</p>
+<ul>
+<li><p>第一次握手：客户端发送syn(同步序列编号)，随机产生seq数据包到服务器，服务端由SYN知道，客户端要求建立联机；</p>
+</li>
+<li><p>第二次握手：服务端收到请求后要确认联机信息，向A发送ack(确认字符) number=(客户端的seq+1)，syn=1，ack=1，随机产生seq=7654321的包；</p>
+</li>
+<li><p>第三次握手：主机A收到后检查ack number是否正确，即第一次发送的seq number+1，以及位码ack是否为1，若正确，主机A会再发送ack number=(主机B的seq+1)，ack=1，主机B收到后确认seq值与ack=1则连接建立成功。</p>
+<p>为了实现可靠数据传输，TCP 协议的通信双方，都必须维护一个序列号，以标识发送出去的数据包中，哪些是已经被对方收到的。 三次握手的过程即是通信双方相互告知序列号起始值，并确认对方已经收到了序列号起始值的必经步骤。如果只是两次握手，至多只有连接发起方的起始序列号能被确认，另一方选择的序列号则得不到确认。</p>
+</li>
+</ul>
+</li>
+<li><p>四次挥手是什么？</p>
+<p>  当客户端和服务器端断开连接时，需要进行4次通信。</p>
+</li>
+<li><p>为什么是四次挥手？<br>  客户端发送断开连接后，服务端收到请求会向客户端回复ack，此时服务端还有一些收场工作要做，释放资源等，收场工作完成之后再向客户端发送断开连接请求，然后客户端再向服务端返回确认字符ack。</p>
+</li>
 </ul>
 
       </section>
