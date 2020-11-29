@@ -160,7 +160,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 11, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4082</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4104</span>
     </div>
   </div>
 </section>
@@ -187,7 +187,7 @@
 <p> Session则保存在服务器端，通过唯一的值sessionID来区别每一个用户。SessionID随每个连接请求发送到服务器，服务器根据sessionID来识别客户端，再通过session 的key获取session值。</p>
 <h5 id="与Cookie相关的HTTP扩展头"><a href="#与Cookie相关的HTTP扩展头" class="headerlink" title="与Cookie相关的HTTP扩展头"></a>与Cookie相关的HTTP扩展头</h5><p>1)Cookie：客户端将服务器设置的Cookie返回到服务器;<br>2)Set-Cookie：服务器向客户端设置Cookie;<br>服务器在响应消息中用Set-Cookie头将Cookie的内容回送给客户端，客户端在新的请求中将相同的内容携带在Cookie头中发送给服务器。从而实现会话的保持。</p>
 <h5 id="HTTP缓存机制"><a href="#HTTP缓存机制" class="headerlink" title="HTTP缓存机制"></a>HTTP缓存机制</h5><p>缓存会根据请求保存输出内容的副本，例如html页面，图片，文件，当下一个请求来到的时候：如果是相同的URL，缓存直接使用副本响应访问请求，而不是向源服务器再次发送请求。<br>缓存的优点：<br>减少相应延迟<br>减少网络带宽消耗<br><img   class="lazyload" data-original="https://res.cloudinary.com/dxowallsa/image/upload/v1605714898/23660000-eab05eed363d7e5a_lga6da.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
-<h5 id="不同位置的缓存"><a href="#不同位置的缓存" class="headerlink" title="不同位置的缓存"></a>不同位置的缓存</h5><p>1.<strong>Server Worker</strong>优先级最高，Service Worker 能够操作的缓存是有别于浏览器内部的 memory cache 或者 disk cache 的。我们可以从 Chrome 的 F12 中，Application -&gt; Service Workers 找到。除了位置不同之外，这个缓存是永久性的，即关闭 TAB 或者浏览器，下次打开依然还在(而 memory cache 不是)。</p>
+<h5 id="不同位置的缓存"><a href="#不同位置的缓存" class="headerlink" title="不同位置的缓存"></a>不同位置的缓存</h5><p>1.<strong>Service Worker</strong>优先级最高，Service Worker 能够操作的缓存是有别于浏览器内部的 memory cache 或者 disk cache 的。我们可以从 Chrome 的 F12 中，Application -&gt; Service Workers 找到。除了位置不同之外，这个缓存是永久性的，即关闭 TAB 或者浏览器，下次打开依然还在(而 memory cache 不是)。</p>
 <p>如果 Service Worker 没能命中缓存，一般情况会使用 fetch() 方法继续获取资源。这时候，浏览器就去 memory cache 或者 disk cache 进行下一次找缓存的工作了。注意：经过 Service Worker 的 fetch() 方法获取的资源，即便它并没有命中 Service Worker 缓存，甚至实际走了网络请求，也会标注为 from ServiceWorker。</p>
 <p>2.<strong>Memory Cache</strong>是内存中的缓存(相对 disk cache 就是硬盘上的缓存). 几乎所有的网络请求资源都会被浏览器自动加入到 memory cache 。但是也正因为数量很大但是浏览器占用的内存不能无限扩大这样两个因素，memory cache 注定只能是个“短期存储”,也就是 TAB 关闭后 memory cache 便就失效了。</p>
 <p>memory cache 机制保证了一个页面中如果有两个相同的请求 (例如两个 src 相同的 ，两个 href 相同的 )都实际只会被请求最多一次，避免浪费。</p>
@@ -206,9 +206,10 @@
 <li>disk cache 其实是我们最熟悉也是说的最多的。主要分为强缓存和协商缓存,浏览器加载一个页面的简单流程如下:<br>如果未命中协商缓存，则服务器会将完整的资源返回给浏览器，浏览器加载新资源，并更新缓存。</li>
 </ul>
 <h5 id="强制缓存与对比缓存"><a href="#强制缓存与对比缓存" class="headerlink" title="强制缓存与对比缓存"></a>强制缓存与对比缓存</h5><ul>
-<li>强制缓存，服务器通知浏览器一个缓存时间，在缓存时间内，下次请求，直接用缓存，不在时间内，执行比较缓存策略。</li>
+<li>强制缓存，服务器通知浏览器一个缓存时间，在缓存时间内，下次请求，直接用缓存，不在时间内，执行比较缓存策略。<br>Cache-Control<br>Expires</li>
 <li>比较缓存，将缓存信息中的Etag和Last-Modified通过请求发送给服务器，由服务器校验，返回304状态码时，浏览器直接使用缓存。<br>Etag/If-None-Match策略<br>Last-Modified/If-Modified-Since策略</li>
 </ul>
+<p><img   class="lazyload" data-original="https://res.cloudinary.com/dxowallsa/image/upload/v1606660336/cache_kzhkc9.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
 <h5 id="三次握手与四次挥手"><a href="#三次握手与四次挥手" class="headerlink" title="三次握手与四次挥手"></a>三次握手与四次挥手</h5><p><img   class="lazyload" data-original="https://res.cloudinary.com/dxowallsa/image/upload/v1606138796/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%8E%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B_ahbmji.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
 <ul>
 <li><p>三次握手是什么？</p>
