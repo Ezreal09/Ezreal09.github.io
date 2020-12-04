@@ -160,7 +160,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>十二月 02, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4400</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>5256</span>
     </div>
   </div>
 </section>
@@ -198,6 +198,33 @@
 <li>css加载会影响domready么？<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="javascript">      <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">&#x27;DOMContentLoaded&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;</span><br><span class="javascript">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;DOMContentLoaded&#x27;</span>);</span><br>      &#125;);<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">link</span></span><br><span class="hljs-tag">      <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.css&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span></span><br><span class="hljs-tag">    /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>demo1标题<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;到我没&#x27;</span>);</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <span class="hljs-comment">&lt;!----&gt;</span><br>    <span class="hljs-comment">&lt;!----&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
 当我们注释下面的script时，控制台会输出DOMContentLoaded，否则不会。结论：如果页面中同时存在了CSS和js，并且存在Js 且在CSS后面 DOMContentLoaded就会在CSS加载后才能执行；其他情况下 DOMContentLoaded不会等待CSS加载 他也不会等待图片、视频资源加载。</li>
 </ol>
+<h4 id="重排（回流）和重绘"><a href="#重排（回流）和重绘" class="headerlink" title="重排（回流）和重绘"></a>重排（回流）和重绘</h4><ul>
+<li><p>什么是重排（回流）</p>
+<p>当render tree中的一部分(或全部)因为元素的规模尺寸，布局，隐藏等改变而需要重新构建。这就称为重排(reflow)。每个页面至少需要一次重排，就是在页面第一次加载的时候，这时候是一定会发生重排的，因为要构建render tree。</p>
+<p><strong>重排</strong> 盒模型改变必定会重排，重排一定会引起重绘</p>
+<ul>
+<li>添加/删除元素</li>
+<li>内容发生改变(文字数量或图片大小等等)</li>
+<li>display:none</li>
+<li>移动元素位置</li>
+<li>修改浏览器大小,字体大小</li>
+</ul>
+<p>一些读取操作也可能引起重排</p>
+<ul>
+<li>offset(Top|Left|Width|Height)</li>
+<li>scroll(Top|Left|Width|Height)</li>
+<li>client(Top|Left|Width|Height)</li>
+<li>getComputedStyle()</li>
+</ul>
+</li>
+<li><p>什么是重绘</p>
+<p>在重排的时候，浏览器会使渲染树中受到影响的部分失效，并重新构造这部分渲染树，完成重排后，浏览器会重新绘制受影响的部分到屏幕中，该过程成为重绘。</p>
+<p>重绘的触发: 任何对元素样式,如 color,background-color 等属性的改变,JS和CSS都会引起重绘。</p>
+</li>
+</ul>
+<p>浏览器会维护1个队列，把所有会引起回流、重绘的操作放入这个队列，等队列中的操作到了一定的数量或者到了一定的时间间隔，浏览器就会flush队列，进行一个批处理。这样就会让多次的回流、重绘变成一次回流重绘。但是在用JS操作DOM时,当去查询这些属性时,浏览器就会强制刷新队列。因为如果不立即执行队列中的任务,有可能得到的结果是错误的。相当于你强制打断了浏览器的优化流程，引起了重排。也就是上面说的为什么读取操作可能引起重排。</p>
+<h4 id="requestAnimationFrame"><a href="#requestAnimationFrame" class="headerlink" title="requestAnimationFrame"></a>requestAnimationFrame</h4><p>执行动画,可以使用 requestAnimationFrame 要求浏览器在下次重绘之前调用指定的回调函数更新动画，避免多余的操作。</p>
+<h4 id="fastdom库"><a href="#fastdom库" class="headerlink" title="fastdom库"></a>fastdom库</h4><p><a target="_blank" rel="noopener" href="https://github.com/wilsonpage/fastdom">fastdom</a>是一个优秀的库，可以帮助我们批量访问DOM，避免了不必要的文档重排，并极大地提高了布局性能。</p>
 
       </section>
       <section class="extra">
