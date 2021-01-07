@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>redux核心状态管理 - Ezreal BLOG</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="Redux/React 自身良好的架构、先进的理念，加..."> 
+  
+  <meta name="author" content="Ezreal"> 
+
+  
+    <link rel="icon" href="/images/icons/blog.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/blog.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/blog.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/blog.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/blog.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png',
+        wechat: 'https://i.bmp.ovh/imgs/2020/10/c946a2c24fbc9cc9.png'
+      },
+      motto: {
+        api: '',
+        default: '真正的大师，永远都怀着一颗学徒的心。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">redux核心状态管理</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09">地址</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/logo/react.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">redux核心状态管理</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十一月 07, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3290</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h3 id="Redux-React-自身良好的架构、先进的理念，加上一系列优秀的第三方插件的支持，是-React-Redux-成功的关键所在。"><a href="#Redux-React-自身良好的架构、先进的理念，加上一系列优秀的第三方插件的支持，是-React-Redux-成功的关键所在。" class="headerlink" title="Redux/React 自身良好的架构、先进的理念，加上一系列优秀的第三方插件的支持，是 React/Redux 成功的关键所在。"></a>Redux/React 自身良好的架构、先进的理念，加上一系列优秀的第三方插件的支持，是 React/Redux 成功的关键所在。</h3><p>闲言少叙，直接进入主题～</p>
+<h4 id="Redux-架构"><a href="#Redux-架构" class="headerlink" title="Redux 架构"></a>Redux 架构</h4><ul>
+<li>Redux 将 React 看作输入为 state，输出为 view 的“纯”函数。</li>
+<li>范畴论将世界抽象为对象和对象之间的联系，Redux 将所有事件抽象为 action。</li>
+<li>在函数式编程中，Container 中含有 value 和 map 两个属性，而修改 value 的方法只有 map，在操作完 value 后将新值放回 Container 中。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 如何操作或修改 value 由 f 给出。 store -&gt; container</span><br>currentState -&gt; __value<br>action -&gt; f<br>currentReducer -&gt; map<br>middleware -&gt; IO functor (解决异步操作的各种问题。)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>store 是一个容器含有 state 和 reducer，<blockquote>
+<p>reducer 是一个纯函数，它可以查看之前的状态，执行一个 action 并且返回一个新的<br>状态。</p>
+</blockquote>
+</li>
+</ul>
+<p>这从 store 的创建语句 enhancer(createStore)(reducer, preloadedState) 可以很明显的得出。而修改 store 中的 currentState 的唯一方法是使用 currentReducer，并且 currentState 在修改完后将新值依然存放在 store 内。</p>
+<h4 id="如何修改-currentState-是根据用户操作-action。"><a href="#如何修改-currentState-是根据用户操作-action。" class="headerlink" title="如何修改 currentState 是根据用户操作 action。"></a>如何修改 currentState 是根据用户操作 action。</h4><ul>
+<li>applyMiddlewar.js 使用自定义的 middleware 来扩展 Redux</li>
+<li>bindActionCreators.js 把 action creators 转成拥有同名 keys 的对象,使用时可以直接调用</li>
+<li>combineReducers.js 一个比较大的应用，需要对 reducer 函数进行拆分，拆分后的每一块独立负责管理 state 的一部分</li>
+<li>compose.js 从右到左来组合多个函数，函数编程中常用到 createStore.js 创建一个 Redux Store 来放所有的 state utils/warnimng.js 控制台输出一个警告，我们可以不用看</li>
+<li>React 可以看做纯函数,固定的 state 输入输出组件</li>
+</ul>
+<h5 id="Redux-Store-的基础"><a href="#Redux-Store-的基础" class="headerlink" title="Redux Store 的基础"></a>Redux Store 的基础</h5><ul>
+<li>管理应用的 state</li>
+<li>通过 store.getState() 可以获取 state</li>
+<li>通过 store.dispatch(action) 来触发 state 更新</li>
+<li>通过 store.subscribe(listener) 来注册 state 变化监听器</li>
+<li>通过 createStore(reducer, [initialState]) 创建</li>
+</ul>
+<h5 id="React-Redux-的原理"><a href="#React-Redux-的原理" class="headerlink" title="React-Redux 的原理"></a>React-Redux 的原理</h5><p>Provider 其实就只是一个外层容器，它的作用就是通过配合 connect 来达到跨层级 传递数据。使用时只需将 Provider 定义为整个项目最外层的组件，并设置好 store。 那么整个项目都可以直接获取这个 store。它的原理其实是通过 React 中的 Context 来<br>H4 实现的。它大致的核心代码如下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> React, &#123; Component &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; PropTypes &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;prop-types&quot;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Provider</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-title">getChildContext</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">store</span>: <span class="hljs-built_in">this</span>.props.store &#125;;<br>  &#125;<br>  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-built_in">super</span>();<br>    <span class="hljs-built_in">this</span>.state = &#123;&#125;;<br>  &#125;<br>  <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.props.children;<br>  &#125;<br>&#125;<br>Provider.childContextTypes = &#123;<br>  store: PropTypes.object,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>connect 的作用是连接 React 组件与 Redux store，它包在我们的容器组件的外一 层，它接收上面 Provider 提供的 store 里面的 state 和 dispatch，传给一个构造函 数，返回一个对象，以属性形式传给我们的容器组件。<br>它共有四个参数 mapStateToProps, mapDispatchToProps, mergeProps 以及 options。<br>mapStateToProps 的作用是将 store 里的 state(数据源)绑定到指定组件的 props 中 mapDispatchToProps 的作用是将 store 里的 action(操作数据的方法)绑定到指定 组件的 props 中<br>另外两个方法一般情况下使用不到，这里就不做介绍。。<br>那么 connect 是怎么将 React 组件与 Redux store 连接起来的呢?其主要逻辑可以总 结成以下代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; Component &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; PropTypes &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;prop-types&quot;</span>;<br><span class="hljs-keyword">const</span> connect = <span class="hljs-function">(<span class="hljs-params">mapStateToProps, mapDispatchToProps</span>) =&gt;</span> <span class="hljs-function">(<span class="hljs-params">WrappedComponent</span>) =&gt;</span> &#123;<br>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Connect</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"></span>)</span> &#123;<br>      <span class="hljs-built_in">super</span>();<br>      <span class="hljs-built_in">this</span>.state = &#123;&#125;;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-title">componentWillMount</span>(<span class="hljs-params"></span>)</span> &#123;<br>      <span class="hljs-built_in">this</span>.unSubscribe = <span class="hljs-built_in">this</span>.context.store.subscribe(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-built_in">this</span>.setState(mapStateToProps(<span class="hljs-built_in">this</span>.context.store.getState()));<br>      &#125;);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-title">componentWillUnmount</span>(<span class="hljs-params"></span>)</span> &#123;<br>      <span class="hljs-built_in">this</span>.unSubscribe();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span> &#123;<br>      <span class="hljs-keyword">return</span> (<br>        &lt;WrappedComponent<br>          &#123;...this.state&#125;<br>          &#123;...mapDispatchToProps(<span class="hljs-built_in">this</span>.context.store.dispatch)&#125;<br>        /&gt;<br>      );<br>    &#125;<br>  &#125;<br>  Connect.contextTypes = &#123;<br>    store: PropTypes.object,<br>  &#125;;<br>  <span class="hljs-keyword">return</span> Connect;<br>&#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connect;<br></code></pre></td></tr></table></figure>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>Ezreal</li>
+  <li><strong>本文链接：</strong><a href="https://ezreal09.github.io/2020/11/07/react/redux%E6%A0%B8%E5%BF%83%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/index.html">https://ezreal09.github.io/2020/11/07/react/redux%E6%A0%B8%E5%BF%83%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redux/" rel="tag">redux</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/11/21/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/"><i class="iconfont iconleft"></i>浏览器渲染流程</a>
+  
+  
+    <a href="/2020/11/05/js/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/">排序算法总结<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Ezreal09 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:734775532@qq.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09">地址</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>
