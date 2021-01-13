@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>性能指标总结 - Ezreal BLOG</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="常见性能名词解释：
+FPFP（全称“First Pai..."> 
+  
+  <meta name="author" content="Ezreal"> 
+
+  
+    <link rel="icon" href="/images/icons/blog.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/blog.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/blog.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/blog.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/blog.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png',
+        wechat: 'https://i.bmp.ovh/imgs/2020/10/c946a2c24fbc9cc9.png'
+      },
+      motto: {
+        api: '',
+        default: '真正的大师，永远都怀着一颗学徒的心。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">性能指标总结</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09">地址</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/logo/performance.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">性能指标总结</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>一月 12, 2021</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2438</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="常见性能名词解释："><a href="#常见性能名词解释：" class="headerlink" title="常见性能名词解释："></a>常见性能名词解释：</h2><ul>
+<li><p><strong>FP</strong><br>FP（全称“First Paint”，翻译为“首次绘制”） 是时间线上的第一个“时间点”，它代表浏览器第一次向屏幕传输像素的时间，也就是页面在屏幕上首次发生视觉变化的时间。<br>注意：FP 不包含默认背景绘制，但包含非默认的背景绘制。<br>通过 performance.getEntriesByType(‘paint’)，取第一个 pain 的时间。</p>
+</li>
+<li><p><strong>FCP</strong><br>FCP（全称“First Contentful Paint”，翻译为“首次内容绘制”），顾名思义，它代表浏览器第一次向屏幕绘制 “内容”。<br>注意：只有首次绘制文本、图片（包含背景图）、非白色的 canvas 或 SVG 时才被算作 FCP。<br>通过 performance.getEntriesByType(‘paint’)，取第二个 pain 的时间，或者通过 Mutation Observer 观察到首次节点变动的时间。</p>
+<blockquote>
+<p>FP 与 FCP 这两个指标之间的主要区别是：FP 是当浏览器开始绘制内容到屏幕上的时候，只要在视觉上开始发生变化，无论是什么内容触发的视觉变化，在这一刻，这个时间点，叫做 FP。相比之下，FCP 指的是浏览器首次绘制来自 DOM 的内容。例如：文本，图片，SVG，canvas 元素等，这个时间点叫 FCP。FP 和 FCP 可能是相同的时间，也可能是先 FP 后 FCP。</p>
+</blockquote>
+</li>
+<li><p><strong>FMP</strong><br>FMP(FirstMeaningfulPaint)是页面主要内容出现在屏幕上的时间, 这将是用户感知加载体验的主要指标。目前尚无标准化的定义, 因为很难以通用的方式去确定各种类型页面的关键内容。实践中,可以将页面评分最高的可见内容出现在屏幕上的时间作为 FirstMeaningfulPaint。</p>
+</li>
+<li><p><strong>LCP</strong><br>LCP（Largest Contentful Paint），用于记录视窗内最大的元素绘制的时间，该时间会随着页面渲染变化而变化，因为页面中的最大元素在渲染过程中可能会发生改变，另外该指标会在用户第一次交互后停止记录。</p>
+</li>
+<li><p><strong>TTI</strong><br>TTI (Time to Interactive) 可交互时间，指标用于标记应用已进行视觉渲染并能可靠响应用户输入的时间点。</p>
+</li>
+<li><p><strong>TBT</strong><br>TBT (Total Blocking Time) 页面阻塞总时长，TBT 汇总所有加载过程中阻塞用户操作的时长，在 FCP 和 TTI 之间任何 long task 中阻塞部分都会被汇总。</p>
+</li>
+<li><p><strong>FID</strong><br>FID (First Input Delay) 首次输入延迟: 指标衡量的是从用户首次与您的网站进行交互（即当他们单击链接，点击按钮等）到浏览器实际能够访问之间的时间。<br>为了在实验数据下预测 FID，通常会用 TBT。他们测量的内容不同，但改善 TBT 通常也能改善 FID。<br>一个糟糕的 FID 主要原因是 JS 执行过长，优化 JS 的解析、编译、执行可以直接降低 FID。</p>
+</li>
+<li><p><strong>CLS</strong><br>CLS (Cumulative Layout Shift) 累积布局偏移: 总结起来就是一个元素初始时和其 hidden 之间的任何时间如果元素偏移了, 则会被计算进去。</p>
+</li>
+<li><p><strong>DCL</strong><br>DCL (DomContentloaded): 当 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，无需等待样式表、图像和子框架的完成加载。</p>
+</li>
+</ul>
+<h2 id="白屏时间与首屏时间"><a href="#白屏时间与首屏时间" class="headerlink" title="白屏时间与首屏时间"></a>白屏时间与首屏时间</h2><blockquote>
+<p>首屏和白屏时间，没有统一计算标准。以下总结只作为一个参考，最好在实际生产中要通过自身业务制定方法，而不是死记硬背一个方法来实现计算。</p>
+</blockquote>
+<ol>
+<li><p><strong>白屏时间：</strong></p>
+<p>页面开始请求，到页面刚开始显示内容，叫做白屏时间，这个过程包括 dns 查询、建立 tcp 连接、发送首个 http 请求（如果使用 https 还要介入 TLS 的验证时间）、返回 html 文档、html 文档 head 解析完毕。</p>
+<blockquote>
+<p>浏览器绘制页面是渐进的，上到下解析，不需要等到所有 HTML 文档都解析完毕。在不断地接受内容的同时，引擎会将这部分内容解析并且显示出来。<br>1、非可视化内容不会显示到窗口。浏览器绘制之前，肯定先解析 head。<br>2、head 结束，解析 body。<br>所以一般我们认为，开始解析 body 就是 页面开始解析的时间</p>
+</blockquote>
+<p>白屏时间 = 页面开始展示时间点 - 开始请求时间点；<br>代码实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>白屏时间<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xxxxx&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="javascript">      <span class="hljs-keyword">var</span> endTime = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 白屏时间 = endTime - performance.timing.navigationStart --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>首屏时间:</strong></p>
+<p> 首屏时间是指，在不滚动屏幕下的前提下，用户看到完整第一屏内容花费的时间;<br> 首屏内容完全加载完成，才叫首屏，而不是出现内容，或者部分元素没有展示;<br> 计算方式：</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> perfData = <span class="hljs-built_in">window</span>.performance.timing; <br><span class="hljs-keyword">var</span> renderTime = perfData.domComplete - perfData.domLoading;<br></code></pre></td></tr></table></figure>
+<p> 但随着SPA模式的盛行，performance Api已经不能完全正确计算出首屏时间了，<br> 首屏计算目前也没有统一标准。阿里云前端监控团队采用深度优先遍历方法获取最高可见增量元素获取首屏时间值得借鉴，详细可见：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/44933789%E3%80%82">https://zhuanlan.zhihu.com/p/44933789。</a></p>
+</li>
+</ol>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>Ezreal</li>
+  <li><strong>本文链接：</strong><a href="https://ezreal09.github.io/2021/01/12/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E6%80%BB%E7%BB%93/index.html">https://ezreal09.github.io/2021/01/12/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E6%80%BB%E7%BB%93/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://i.bmp.ovh/imgs/2020/10/f04107984947c701.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a></li></ul>
+
+        
+<nav class="nav">
+  
+  
+    <a href="/2020/12/02/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">性能优化常见问题<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Ezreal09 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:734775532@qq.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>前端小白 <a target="_blank" href="https://ezreal09.github.io/">Ezreal</a>  |  github - <a target="_blank" href="https://github.com/Ezreal09">地址</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>
